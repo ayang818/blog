@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: ayang818' blog
+title: Ayang818' blog
 subtitle: Do something new!
 description: 杨丰畅的博客
 keywords: Do something new!
@@ -13,8 +13,8 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
-root: /
+url: https://ayang818.gitee.io/blog
+root: /blog/
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
@@ -79,7 +79,7 @@ theme: yilia
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:ayang818/ayang818.github.io.git
+  repo: git@gitee.com:ayang818/blog.git
   branch: master
 
 jsonContent:
