@@ -1,5 +1,5 @@
 ---
-title: Java原子性操作以及不如来手写一个简单互斥锁
+title: Java原子性操作以及不如来手写一个简单锁
 date: 2019-07-16 22:21:04
 tags: [Java,并发编程]
 ---
@@ -109,7 +109,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.LockSupport;
 
 /**
- * JameLock
+ * AyangLock
  */
 public class AyangLock implements Lock {
     AtomicReference<Thread> owner = new AtomicReference<>();

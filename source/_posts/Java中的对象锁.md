@@ -23,8 +23,9 @@ public ClassLock {
     public ClassLock getInstance() {
         if (classLock ==  null) {
             synchronized (ClassLock.class) {
-                classLock = new ClassLock();
-            	return classLock;
+                if (classLock == null) {
+                    classLock = new ClassLock();
+                }
             }
         }
         return classLock;
