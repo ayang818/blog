@@ -1,0 +1,148 @@
+# Header
+
+menu:
+  主页: https://ayang818.gitee.io/blog/
+
+# SubNav
+subnav:
+  github: "https://github.com/ayang818"
+  zhihu: "https://www.zhihu.com/people/yang-yang-64-89-86/activities"
+  #qq: "#"
+  #weixin: "#"
+  #jianshu: "#"
+  #douban: "#"
+  #segmentfault: "#"
+  bilibili: "https://space.bilibili.com/35953658"
+  #acfun: "#"
+  mail: "mailto:ayang818@qq.com"
+  #facebook: "#"
+  #google: "#"
+  #twitter: "#"
+  #linkedin: "#"
+
+rss: /atom.xml
+
+# 是否需要修改 root 路径
+# 如果您的网站存放在子目录中，例如 http://yoursite.com/blog，
+# 请将您的 url 设为 http://yoursite.com/blog 并把 root 设为 /blog/。
+root: /blog
+
+# Content
+
+# 文章太长，截断按钮文字
+excerpt_link: "more"
+# 文章卡片右下角常驻链接，不需要请设置为false
+show_all_link: '展开全文'
+# 数学公式
+mathjax: true
+# 是否在新窗口打开链接
+open_in_new: true
+
+# 打赏
+# 打赏type设定：0-关闭打赏； 1-文章对应的md文件里有reward:true属性，才有打赏； 2-所有文章均有打赏
+reward_type: 2
+# 打赏wording
+reward_wording: '谢谢你的赞赏！'
+# 支付宝二维码图片地址，跟你设置头像的方式一样。比如：/assets/img/alipay.jpg
+alipay: https://computernetworking.oss-cn-hongkong.aliyuncs.com/temppic/alipay.jpg
+# 微信二维码图片地址
+weixin: 
+
+# 目录
+# 目录设定：0-不显示目录； 1-文章对应的md文件里有toc:true属性，才有目录； 2-所有文章均显示目录
+toc: 2
+# 根据自己的习惯来设置，如果你的目录标题习惯有标号，置为true即可隐藏hexo重复的序号；否则置为false
+toc_hide_index: true
+# 目录为空时的提示
+toc_empty_wording: '目录，不存在的…'
+
+# 是否有快速回到顶部的按钮
+top: true
+
+# Miscellaneous
+baidu_analytics: ''
+google_analytics: ''
+favicon: https://upload-serve.oss-cn-beijing.aliyuncs.com/image/aliosstest.jpg
+
+#你的头像url
+avatar: https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg
+
+#是否开启分享
+share_jia: true
+
+#评论：1、多说；2、网易云跟帖；3、畅言；4、Disqus；5、Gitment
+#不需要使用某项，直接设置值为false，或注释掉
+#具体请参考wiki：https://github.com/litten/hexo-theme-yilia/wiki/
+
+#1、多说
+duoshuo: false
+
+#2、网易云跟帖
+wangyiyun: false
+
+#3、畅言
+changyan_appid: false
+changyan_conf: false
+
+#4、Disqus 在hexo根目录的config里也有disqus_shortname字段，优先使用yilia的
+disqus: false
+
+#5、Gitment
+gitment_owner: false      #你的 GitHub ID
+gitment_repo: ''          #存储评论的 repo
+gitment_oauth:
+  client_id: ''           #client ID
+  client_secret: ''       #client secret
+
+gitalk:
+  enable:  true
+  githubID:  ayang818   
+  repo:  'comment-repo'
+  ClientID:  '2df080a3f11a34fc4f0d'
+  ClientSecret:  '3c6fefb8587a575f94ca5a00cdf6ad9e41ad0c0c'
+  adminUser:  ayang818
+  distractionFreeMode: true
+
+# 样式定制 - 一般不需要修改，除非有很强的定制欲望…
+style:
+  # 头像上面的背景颜色
+  header: '#4d4d4d'
+  # 右滑板块背景
+  slider: 'linear-gradient(200deg,#a0cfe4,#e8c37e)'
+
+# slider的设置
+slider:
+  # 是否默认展开tags板块
+  showTags: false
+
+# 智能菜单
+# 如不需要，将该对应项置为false
+# 比如
+#smart_menu:
+#  friends: false
+smart_menu:
+  innerArchive: '所有文章'
+  friends: '友链'
+  aboutme: '关于我'
+
+friends:
+  未来的女朋友(暂时为空): '#'
+  转转: https://wzyxv1n.top
+  syh大佬: https://blog.csdn.net/syh0313
+  伦哥: https://ar8327k.top
+  
+aboutme: '
+  基本信息</br>
+  1. 杭州电子科技大学</br>
+  2. 信息管理与信息系统</br>
+  3. 大二在读</br>
+  4. Github高强度使用用户</br>
+  5. 热爱自己造轮子, 热爱开源</br>
+  6. 啥玩意都愿意去捣鼓一下</br>
+  7. 喜欢Alibaba 和 Google</br>
+</br>
+  职业经历</br>
+  2019.6 - 2019.10 : 菠皇娱乐科技事务所(🍍赛东)·工具人</br>
+  2019.11 - ~ : 老老实实呆在学校(希望大三的时候有机会去阿里实习)</br>
+'
+
