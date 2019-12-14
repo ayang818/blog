@@ -54,6 +54,6 @@ select from order where id = 1;
 ```java
 UUID.randomUUID().toString();
 ```
-有兴趣看看关于UUID.randomUUID()中一些有意思的点的还可以看看w我的这篇文章[使用0xff来保证二进制补码的一致性](https://ayang818.gitee.io/blog/2019/12/14/%E4%BD%BF%E7%94%A80xff%E6%9D%A5%E4%BF%9D%E8%AF%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%A1%A5%E7%A0%81%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7/)
+关于UUID.randomUUID()中一些有意思的点的还可以看看我的这篇文章[使用0xff来保证二进制补码的一致性](https://ayang818.gitee.io/blog/2019/12/14/%E4%BD%BF%E7%94%A80xff%E6%9D%A5%E4%BF%9D%E8%AF%81%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%A1%A5%E7%A0%81%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7/)
 
 没写完。。。。。
