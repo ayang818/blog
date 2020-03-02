@@ -12,10 +12,12 @@ tags: [Java, IDEA]
 ```
 D:\jdk8\jdk1.8.0_232\bin\java.exe "\"-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 201.4865.12\lib\idea_rt.jar=61840:C:\Program Files\JetBrains\IntelliJ IDEA 201.4865.12\bin\"" -Dfile.encoding=UTF-8 -classpath ( 省略一系列依赖Jar包 ) C:\Users\25959\Desktop\test\target\classes com.ayang818.test.Test
 ```
-这是我运行一个很简单的程序，IDEA 帮我们拼出来的命令行参数，其中 ``` -Dfile.encoding ``` 和 ``` -classpath ``` 我们都很熟悉，一个是指定编码方式，另一个是指定 classpath 路径。但是有一个我们可能很陌生的参数，叫做 ``` -javaagent ```，  agent 翻译成中文是代理的意思。于是我开始了一天的探究过程。
+这是我运行一个很简单的程序，IDEA 帮我们拼出来的命令行参数，其中  -Dfile.encoding  和  -classpath  我们都很熟悉，一个是指定编码方式，另一个是指定 classpath 路径。但是有一个我们可能很陌生的参数，叫做  -javaagent ，  agent 翻译成中文是代理的意思。于是我开始了一天的探究过程。
+
 <!-- more -->
+
 # 过程
-首先我追踪了上面的代码中 ```-javaagent``` 后面的Jar包。
+首先我追踪了上面的代码中 -javaagent 后面的Jar包。
 ```
 C:\Program Files\JetBrains\IntelliJ IDEA 201.4865.12\lib\idea_rt.jar
 ```
@@ -28,7 +30,7 @@ jar xvf idea_rt.jar
 然后打开解压后的目录。目录结构如下
 ![](img1.png)
 
-首先查看 ```MANIFEST.MF``` 文件下的内容（这里就开始涉及到Instrument的内容了），有一个字段如下。
+首先查看 MANIFEST.MF 文件下的内容（这里就开始涉及到Instrument的内容了），有一个字段如下。
 ```
 Premain-Class: com.intellij.rt.execution.application.AppMainV2$Agent
 ```
@@ -63,7 +65,7 @@ public static void premain(String args) {
 
 }
 ```
-首先AppMainV2 的 premain 方法，对传入的参数做了一个分割，58转化为 char 类型是 ```:```，观察 IDEA 启动时通过 -javaagent 传入的参数
+首先AppMainV2 的 premain 方法，对传入的参数做了一个分割，58转化为 char 类型是 : ，观察 IDEA 启动时通过 -javaagent 传入的参数
 ```
 -javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 201.4865.12\lib\idea_rt.jar=61840:C:\Program Files\JetBrains\IntelliJ IDEA 201.4865.12\bin\""
 ```
@@ -136,7 +138,7 @@ private static void startMonitor(final int portNumber, final boolean helperLibLo
 ```
 这些代码都很简单，这段代码创建了一个守护进程，在这个进程中创建了一个 Socket 用来监听 Java 进程运行的端口，然后接受 Java 进程端口发出来的一些信息，比如程序输出，异常堆栈等等，然后输出到 IDEA 的命令行中，这也非常好理解。
 
-这就是这段 IDEA 帮我们传入的 ```-javaagent``` 参数做的事情，它做的事情非常像 AOP（面向切面编程）。我们在写 Java 的时候通过动态代理来实现 AOP ，从而实现不在功能模块中添加代码，就可以对这个功能增加辅助功能的工作，比如 记录方法运行时间、输出日志等。```-javaagent```也做到了这件事，它使用的是 Java 5中的 **Instrumentation** 机制。
+这就是这段 IDEA 帮我们传入的 -javaagent 参数做的事情，它做的事情非常像 AOP（面向切面编程）。我们在写 Java 的时候通过动态代理来实现 AOP ，从而实现不在功能模块中添加代码，就可以对这个功能增加辅助功能的工作，比如 记录方法运行时间、输出日志等。-javaagent 也做到了这件事，它使用的是 Java 5中的 **Instrumentation** 机制。
 
 ## Instrumentation 能力
 说实话，我没找到 Instrumentation 的准确翻译，我把它翻译作 插装 —— 在主程序前，插入一些新的能力。
