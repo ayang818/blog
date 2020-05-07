@@ -13,11 +13,10 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://ayang818.gitee.io/blog
-root: /blog/
+url: https://blog.ayang818.top
+root: /
 permalink: :title/
 permalink_defaults:
-
 # Directory
 source_dir: source
 public_dir: public
@@ -79,7 +78,7 @@ theme: icarus
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@gitee.com:ayang818/blog.git
+  repo: git@119.23.240.115:/var/repo/blog.git
   branch: master
 
 jsonContent:
