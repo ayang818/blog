@@ -1,10 +1,11 @@
 ---
 title: 使用Jetpack的Architecture工具降低Android开发中的耦合度
 date: 2020-06-06 23:17:21
-tags: [android, jetpack]
+tags: [android, jetpack, 设计模式]
 ---
 
 > 简单项目示例地址——https://github.com/ayang818/AndroidRookie
+> 写这篇文章并不是因为要转android了（从大一上的时候光速学了三天，糊弄了一下android课的作业后就再没写过了QAQ），而是最近看到一篇关于在android使用MVC，MVP，MVVM的架构方法的[文章](https://www.tianmaying.com/tutorial/AndroidMVC)，感觉写的很好，就想来自己试一试android的几种解耦方法，触类旁通嘛~。此处也花了几个小时顺便快速学了一下android和其算是趋势的jetpack，故作此博客。
 
 在编写Android代码的时候很容易在一个activity中就编写出耦合度特别高的代码，导致项目不利于维护。下面是几种常见的解决方案解决方案：
 <!-- more -->
