@@ -20,6 +20,10 @@ tags: [自嗨,python,随笔]
 一开始懒得去查B站的弹幕应该怎么获取，然后自己寻思着弹幕估计也是从一个接口里获取的，然后就开始自己抓包。
 显然请求弹幕接口是在XHR(XMLHttpRequest)中, 然后其实很容易就能找到这个Api
 
+upd（2020/11/11）：更新接口为 https://comment.bilibili.com/252509655.xml ，其中数字部分为视频加密后的id号，可以通过抓包得到
+
+
+
 ![](getpack.png)
 <br>就是这个请求，然后其中的接口中<br>
 ![](request.png)
