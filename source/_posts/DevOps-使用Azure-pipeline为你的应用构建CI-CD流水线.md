@@ -4,6 +4,12 @@ date: 2020-04-24 12:18:07
 tags:  [DevOps]
 ---
 
+**2020/11 upd ：文章应该咕咕咕了，但是具体内容可以参照我的视频**
+
+- [DevOps系列篇 - 1. DevOps是什么？DevOps的主要流程？](https://www.bilibili.com/video/BV1YK4y1k7f2)
+- [DevOps系列篇 - 2. 使用Docker将一个最简Web应用容器化](https://www.bilibili.com/video/BV1UT4y1g76F)
+- [微软官方devops教程](https://azure.microsoft.com/zh-cn/overview/devops-tutorial/)
+
 # 什么是 DevOps ？什么是 CI/CD 流水线？
 这个问题由于网上已经有很多很好的文章了，所以我这里就不再详细写了。大家可以自行参考。
 [什么是DevOps？什么是 CI/CD 流水线？](https://www.infoq.cn/article/WHt0wFMDRrBU-dtkh1Xp)
