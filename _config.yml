@@ -76,9 +76,14 @@ theme: icarus
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
+# deploy:
+#   type: git
+#   repo: git@119.23.240.115:/var/repo/blog.git
+#   branch: master
+
 deploy:
   type: git
-  repo: git@119.23.240.115:/var/repo/blog.git
+  repo: git@github.com:ayang818/blog.git
   branch: master
 
 jsonContent:
