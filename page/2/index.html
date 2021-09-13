@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>Ayang818&#39;s blog</title>
+
+
+    <meta name="description" content="杨丰畅的博客">
+<meta name="keywords" content="Do something new!">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ayang818&#39;s blog">
+<meta property="og:url" content="https://blog.ayang818.top/page/2/index.html">
+<meta property="og:site_name" content="Ayang818&#39;s blog">
+<meta property="og:description" content="杨丰畅的博客">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog.ayang818.top/images/og_image.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ayang818&#39;s blog">
+<meta name="twitter:description" content="杨丰畅的博客">
+<meta name="twitter:image" content="https://blog.ayang818.top/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/androidstudio.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818&#39;s blog" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/tags">分类</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+                <a class="navbar-item"
+                href="https://github.com/ayang818">Github</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Github" href="https://github.com/ayang818">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-06-06T15:17:21.000Z">2020-06-06</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes 读完 (大约 816 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/android-jetpack-architecture/">使用Jetpack的Architecture工具降低Android开发中的耦合度</a>
+            
+        </h1>
+        <div class="content">
+            <blockquote>
+<p>简单项目示例地址——<a href="https://github.com/ayang818/AndroidRookie">https://github.com/ayang818/AndroidRookie</a><br>写这篇文章并不是因为要转android了（从大一上的时候光速学了三天，糊弄了一下android课的作业后就再没写过了QAQ），而是最近看到一篇关于在android使用MVC，MVP，MVVM的架构方法的<a href="https://www.tianmaying.com/tutorial/AndroidMVC">文章</a>，感觉写的很好，就想来自己试一试android的几种解耦方法，触类旁通嘛~。此处也花了几个小时顺便快速学了一下android和其算是趋势的jetpack，故作此博客。</p>
+</blockquote>
+<p>在编写Android代码的时候很容易在一个activity中就编写出耦合度特别高的代码，导致项目不利于维护。下面是几种常见的解决方案解决方案：</p>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/android/">android</a>,&nbsp;<a class="has-link-grey -link" href="/tags/jetpack/">jetpack</a>,&nbsp;<a class="has-link-grey -link" href="/tags/设计模式/">设计模式</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/android-jetpack-architecture/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-05-06T12:36:34.000Z">2020-05-06</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    12 minutes 读完 (大约 1732 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/large-file-I-O-in-java/">[优化]Java中大文件IO的优化策略</a>
+            
+        </h1>
+        <div class="content">
+            <p>Java中的IO方式大致分为如下几种</p>
+<ol>
+<li>普通IO，也叫做BIO，基于流模型的阻塞式IO，相关的类大部分都是InputStream，OutputStream，Reader，Writer下的子类。</li>
+<li>NIO，也是大家认为效率较高的IO方式之一，相关的类有 ByteBuffer，FileChannel等。</li>
+<li>mmap内存映射，这是一种将文件直接映射到内存地址的方式，是一种非常快速的IO方案，相关的类有FileChannel，MappedByteBuffer</li>
+</ol>
+<p>但是在分析各种IO方式的优化策略的时，首先至少需要了解一下，使用Java进行一次磁盘读取，到底进行了那些步骤？</p>
+<p>标准的一次文件读肯定涉及以下几个拷贝步骤</p>
+<ol>
+<li>将数据从硬件读取到内核态的内核缓冲区中</li>
+<li>将内核缓冲区的数据读取到用户态的 JVM 中</li>
+</ol>
+<p>此外，底层通过 write 、read 等函数进行 IO 系统调用时，需要传入数据所在缓冲区起始地址和长度，但是由于我们使用的是 Java，Java 中的对象存在 Java 的堆中，由于 GC 的存在，对象在堆中的位置是会不断变动的，所以在用户态的 JVM 和 内核缓冲区之间，还有一个不会被 GC 所干扰的堆外内存区作为缓冲区，所以这里又多了一个拷贝步骤。</p>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/I-O/">I/O</a>,&nbsp;<a class="has-link-grey -link" href="/tags/Java/">Java</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/large-file-I-O-in-java/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-24T04:18:07.000Z">2020-04-24</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    3 minutes 读完 (大约 420 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/DevOps-使用Azure-pipeline为你的应用构建CI-CD流水线/">[DevOps] 使用Azure pipeline + Github为你的应用构建CI/CD流水线</a>
+            
+        </h1>
+        <div class="content">
+            <p><strong>2020/11 upd ：文章应该咕咕咕了，但是具体内容可以参照我的视频</strong></p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1YK4y1k7f2">DevOps系列篇 - 1. DevOps是什么？DevOps的主要流程？</a></li>
+<li><a href="https://www.bilibili.com/video/BV1UT4y1g76F">DevOps系列篇 - 2. 使用Docker将一个最简Web应用容器化</a></li>
+<li><a href="https://azure.microsoft.com/zh-cn/overview/devops-tutorial/">微软官方devops教程</a></li>
+</ul>
+<h1 id="什么是-DevOps-？什么是-CI-CD-流水线？"><a href="#什么是-DevOps-？什么是-CI-CD-流水线？" class="headerlink" title="什么是 DevOps ？什么是 CI/CD 流水线？"></a>什么是 DevOps ？什么是 CI/CD 流水线？</h1><p>这个问题由于网上已经有很多很好的文章了，所以我这里就不再详细写了。大家可以自行参考。<br><a href="https://www.infoq.cn/article/WHt0wFMDRrBU-dtkh1Xp">什么是DevOps？什么是 CI/CD 流水线？</a></p>
+<p>我归纳一下，</p>
+<ol>
+<li>DevOps是敏捷开发的一种主流实现方式，相比于传统的瀑布模型，DevOps为我们快速开发应用，快速发布应用，快速部署应用提供了一种方法论。</li>
+<li>DevOps中大致有如下几个环节<br><ol>
+<li>Version Control （版本控制）</li>
+<li>Continuous Integration（持续集成）</li>
+<li>Continuous Delivery （持续交付） </li>
+<li>Continuout Deployment（持续部署）</li>
+</ol>
+</li>
+</ol>
+<h1 id="如何为你的应用搭建完整的-CI-CD-流水线"><a href="#如何为你的应用搭建完整的-CI-CD-流水线" class="headerlink" title="如何为你的应用搭建完整的 CI/CD 流水线"></a>如何为你的应用搭建完整的 CI/CD 流水线</h1><p>在这篇文章中，我们将使用 Git + <a href="https://www.github.com">Github</a> + Docker + <a href="https://azure.microsoft.com/en-us/services/devops/pipelines/">Azure pipeline</a> 的组合来完成一个简单的 node 服务端应用的自动化流水线的搭建。</p>
+<ol>
+<li><p>创建一个node应用</p>
+<ol>
+<li><p>初始化项目 </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装typescript</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install -g typescript</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化为TypeScript应用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tsc --init</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装我们需要的 express 依赖</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install express @types/express</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写一个最简单的Web应用</p>
+</li>
+</ol>
+</li>
+</ol>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/DevOps/">DevOps</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/DevOps-使用Azure-pipeline为你的应用构建CI-CD流水线/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-12T14:59:58.000Z">2020-04-12</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    19 minutes 读完 (大约 2901 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/DevOps-如何写一个可快速构建镜像的Dockerfile脚本/">[DevOps] 如何写一个可快速构建镜像的Dockerfile脚本</a>
+            
+        </h1>
+        <div class="content">
+            <blockquote>
+<p>本文不针对刚接触Docker和DevOps的初学者，一些初级资料可以查阅——<a href="https://yeasy.gitbooks.io/docker_practice/introduction/what.html">https://yeasy.gitbooks.io/docker_practice/introduction/what.html</a></p>
+</blockquote>
+<p>在一个CI/CD工作流中，我们在本地修改代码并提交后，CI系统会自动构建我们的代码并运行单元测试来验证本次提交的可行性。而这个构建很多时候为了屏蔽平台以及环境的差异性，往往会使用Docker来构建。构建一个Docker image绕不开的话题就是Dockerfile脚本该怎么写。不同的项目事实上编写的Dockerfile遇到的痛点往往不一样。本文针对的痛点是——构建速度慢。针对这个问题，我们首先得了解一下Docker build中的cache机制。</p>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/DevOps/">DevOps</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/DevOps-如何写一个可快速构建镜像的Dockerfile脚本/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-03-01T14:43:07.000Z">2020-03-01</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    13 minutes 读完 (大约 2003 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/java-instrument/">浅析Java强大的动态Instrumention能力</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在前面的博客中，我写过一句话，叫做</p>
+<blockquote>
+<p>Java世界里的一切东西都是在拼Java命令行参数</p>
+</blockquote>
+<p>如果你使用IDEA，并且在运行 Java 代码时观察过 IDEA 帮我们拼出来的命令行参数，举个例子</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">D:\jdk8\jdk1.8.0_232\bin\java.exe &quot;\&quot;-javaagent:C:\Program Files\JetBrains\IntelliJ IDEA 201.4865.12\lib\idea_rt.jar=61840:C:\Program Files\JetBrains\IntelliJ IDEA 201.4865.12\bin\&quot;&quot; -Dfile.encoding=UTF-8 -classpath ( 省略一系列依赖Jar包 ) C:\Users\25959\Desktop\test\target\classes com.ayang818.test.Test</span><br></pre></td></tr></table></figure>
+
+<p>这是我运行一个很简单的程序，IDEA 帮我们拼出来的命令行参数，其中  -Dfile.encoding  和  -classpath  我们都很熟悉，一个是指定编码方式，另一个是指定 classpath 路径。但是有一个我们可能很陌生的参数，叫做  -javaagent ，  agent 翻译成中文是代理的意思。于是我开始了一天的探究过程。</p>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/IDEA/">IDEA</a>,&nbsp;<a class="has-link-grey -link" href="/tags/Java/">Java</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/java-instrument/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-14T08:32:18.000Z">2020-02-14</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    10 minutes 读完 (大约 1569 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/常用的一些算法板子-持续更新/">常用的一些算法板子(持续更新)</a>
+            
+        </h1>
+        <div class="content">
+            <p><strong>持续更新的一些算法板子</strong></p>
+<p><strong>更详细的题目或题解可以查看我的<a href="https://github.com/ayang818/leetcode">刷题仓库</a></strong></p>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/算法/">算法</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/常用的一些算法板子-持续更新/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-02-06T09:52:56.000Z">2020-02-06</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    4 minutes 读完 (大约 639 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/序列化动态规划解题技巧总结/">序列化动态规划解题技巧</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="序列化动态规划解题技巧总结"><a href="#序列化动态规划解题技巧总结" class="headerlink" title="序列化动态规划解题技巧总结"></a>序列化动态规划解题技巧总结</h2><p>序列化动态规划属于动态规划中的基础题，这类题目通常是一组序列。</p>
+<p>这类题目一般有一种比较通用的状态转移方程<br>$$<br>dp[i][aa]=Option_1^{i-1}(dp[i-1][bb])+cast_i<br>$$<br>其实这种题目在代码上也有一些小技巧</p>
+<ol>
+<li>如果使用递推时间代码，让动态规划有效状态的下表从 1 开始，把下表 0 让给一步决策都没有做的初始状态。通常这样做，可以让边界处理简单不少。</li>
+<li>其次是主动转移和被动转移，主动转移是从一个状态去找这个这个状态可以转移到什么状态；被动转移是去找这个状态是由什么状态转移来的。</li>
+</ol>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/算法/">算法</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/序列化动态规划解题技巧总结/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-01-10T14:30:17.000Z">2020-01-10</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a few seconds 读完 (大约 71 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/寒假开始啦-开始进行Kugga的基础设施建设了/">寒假开始啦! 开始进行Kugga的基础设施建设了!</a>
+            
+        </h1>
+        <div class="content">
+            <p>寒假博客应该不怎么会更新了。我的<code>Kugga</code>计划也提上日程了。寒假里的一些知识记录部分会以文档的形式更新在<a href="https://github.com/Kugga-OSS/Prepare-Kugga/wiki">Kugga-wiki</a>上面，感兴趣也可以关注下。</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-12-18T13:25:05.000Z">2019-12-18</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes 读完 (大约 925 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/maven模块化最小实践/">maven模块化最小实践</a>
+            
+        </h1>
+        <div class="content">
+            <h1 id="为什么要进行maven模块化"><a href="#为什么要进行maven模块化" class="headerlink" title="为什么要进行maven模块化"></a>为什么要进行maven模块化</h1><p>在说模块化之前，不妨说说非模块化的项目是怎么样的，非模块化的项目往往是一个单体应用，他的目录结构如下</p>
+<p><img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/image/single.png" alt=""></p>
+<p>为什么说是单体的呢，事实上</p>
+<ol>
+<li>上面看到的所有的包比如controller，mapper，utils，<br>, 这些一个个应用里的功能都是业务的一部分，到时候打jar包的时候其实就是把这些所有的功能打到同一个jar包中。然后运行就可以了。</li>
+<li>整个项目只有一个pom文件，功能与项目强耦合，代码复用能力差。</li>
+</ol>
+<p>那么对于一个多模块项目来说呢，他的目录结构如下</p>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/maven/">maven</a>,&nbsp;<a class="has-link-grey -link" href="/tags/微服务/">微服务</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/maven模块化最小实践/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-12-14T14:58:36.000Z">2019-12-14</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes 读完 (大约 920 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/使用0xff来保证二进制补码的一致性/">使用0xff来保证二进制补码的一致性</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="写这篇文章的起因"><a href="#写这篇文章的起因" class="headerlink" title="写这篇文章的起因"></a>写这篇文章的起因</h2><p>本来今天在写<a href="https://ayang818.gitee.io/blog/2019/12/14/%E5%86%99%E5%86%99%E5%88%86%E5%B8%83%E5%BC%8F%E5%94%AF%E4%B8%80ID-snowflake%E7%AE%97%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0/">浅析分布式唯一ID生成算法——snowflake的实现</a>这篇博客的时候，写的好好的，但是写到一种生成方式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">UUID.randomUUID().toString();</span><br></pre></td></tr></table></figure>
+
+<p>发现自己并不是很知道这个怎么实现的，然后点开了源码打算读一下。结果就发现了一段代码。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">* Private constructor which uses a byte array to construct the new UUID.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="title">UUID</span><span class="params">(<span class="keyword">byte</span>[] data)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">long</span> msb = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">long</span> lsb = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">assert</span> data.length == <span class="number">16</span> : <span class="string">"data must be 16 bytes in length"</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="number">8</span>; i++)</span><br><span class="line">        msb = (msb &lt;&lt; <span class="number">8</span>) | (data[i] &amp; <span class="number">0xff</span>);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i=<span class="number">8</span>; i&lt;<span class="number">16</span>; i++)</span><br><span class="line">        lsb = (lsb &lt;&lt; <span class="number">8</span>) | (data[i] &amp; <span class="number">0xff</span>);</span><br><span class="line">    <span class="keyword">this</span>.mostSigBits = msb;</span><br><span class="line">    <span class="keyword">this</span>.leastSigBits = lsb;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>其中有一小段(下方代码段)我不是很理解有什么作用，因为data[i]的类型实际上是byte类型的，byte的十进制范围是-128-127，而0xff的十进制是15 * 16 + 16 = 256，转化为八位二进制就是11111111，我想着data[i] &amp; 0xff的话是使用0xff做截取操作，但是byte转化为二进制的长度肯定在8位以内，所以这个截取操作第一眼看起来并没有什么用哈？</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">data[i] &amp; <span class="number">0xff</span></span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/老代码/">老代码</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/使用0xff来保证二进制补码的一致性/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+    
+<div class="card card-transparent">
+    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+        <div class="pagination-previous">
+            <a class="is-flex-grow has-text-black-ter" href="/">上一页</a>
+        </div>
+        <div class="pagination-next">
+            <a class="is-flex-grow has-text-black-ter" href="/page/3/">下一页</a>
+        </div>
+        <ul class="pagination-list is-hidden-mobile">
+            
+            <li><a class="pagination-link has-text-black-ter" href="/">1</a></li>
+            
+            <li><a class="pagination-link is-current" href="/page/2/">2</a></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/3/">3</a></li>
+            
+            <li><span class="pagination-ellipsis has-text-black-ter">&hellip;</span></li>
+            
+            <li><a class="pagination-link has-text-black-ter" href="/page/6/">6</a></li>
+            
+        </ul>
+    </nav>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818 (杨丰畅)">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Ayang818 (杨丰畅)
+                    </p>
+                    
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国，杭州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            57
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            0
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            38
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ayang818" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Github" href="https://github.com/ayang818">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/syh0313" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">syh0313</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://wzyxv1n.top/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">wenzhuan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">wzyxv1n.top</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/weixin_43434223" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">旧博客</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/DevOps/" style="font-size: 12px;">DevOps</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Kugga/" style="font-size: 10px;">Kugga</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/big-data/" style="font-size: 10px;">big-data</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/jetpack/" style="font-size: 10px;">jetpack</a> <a href="/tags/js/" style="font-size: 12px;">js</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/分布式理论/" style="font-size: 14px;">分布式理论</a> <a href="/tags/前后端分离/" style="font-size: 14px;">前后端分离</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 18px;">并发编程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/性能挑战赛/" style="font-size: 10px;">性能挑战赛</a> <a href="/tags/日常技能/" style="font-size: 10px;">日常技能</a> <a href="/tags/源码/" style="font-size: 10px;">源码</a> <a href="/tags/灵感/" style="font-size: 10px;">灵感</a> <a href="/tags/算法/" style="font-size: 12px;">算法</a> <a href="/tags/老代码/" style="font-size: 10px;">老代码</a> <a href="/tags/自嗨/" style="font-size: 10px;">自嗨</a> <a href="/tags/自我提升/" style="font-size: 10px;">自我提升</a> <a href="/tags/设计模式/" style="font-size: 18px;">设计模式</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/部门教程/" style="font-size: 12px;">部门教程</a> <a href="/tags/阶段总结/" style="font-size: 10px;">阶段总结</a> <a href="/tags/随笔/" style="font-size: 16px;">随笔</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:15:46.000Z">2021-09-13</time></div>
+                    <a href="/系统复杂度到底是什么/" class="title has-link-black-ter is-size-6 has-text-weight-normal">系统复杂度到底是什么</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:11:06.000Z">2021-09-13</time></div>
+                    <a href="/SOME-TIPS/" class="title has-link-black-ter is-size-6 has-text-weight-normal"># SOME TIPS #</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-19T05:28:30.000Z">2021-04-19</time></div>
+                    <a href="/python-decorator/" class="title has-link-black-ter is-size-6 has-text-weight-normal">python 装饰器从走路到跑路（误</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-06T06:24:00.000Z">2021-03-06</time></div>
+                    <a href="/hive-sql/" class="title has-link-black-ter is-size-6 has-text-weight-normal">hive sql 调优</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-02-22T06:52:05.000Z">2021-02-22</time></div>
+                    <a href="/micro-service-explore/" class="title has-link-black-ter is-size-6 has-text-weight-normal">微服务技术调研</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:15:46.000Z">2021-09-13</time></div>
+                    <a href="/系统复杂度到底是什么/" class="title has-link-black-ter is-size-6 has-text-weight-normal">系统复杂度到底是什么</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:11:06.000Z">2021-09-13</time></div>
+                    <a href="/SOME-TIPS/" class="title has-link-black-ter is-size-6 has-text-weight-normal"># SOME TIPS #</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-19T05:28:30.000Z">2021-04-19</time></div>
+                    <a href="/python-decorator/" class="title has-link-black-ter is-size-6 has-text-weight-normal">python 装饰器从走路到跑路（误</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-06T06:24:00.000Z">2021-03-06</time></div>
+                    <a href="/hive-sql/" class="title has-link-black-ter is-size-6 has-text-weight-normal">hive sql 调优</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-02-22T06:52:05.000Z">2021-02-22</time></div>
+                    <a href="/micro-service-explore/" class="title has-link-black-ter is-size-6 has-text-weight-normal">微服务技术调研</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818&#39;s blog" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 ayang818&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://blog.ayang818.top',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+<script src="/node_modules/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/node_modules/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

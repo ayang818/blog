@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>hive sql 调优 - Ayang818&#39;s blog</title>
+
+
+    <meta name="description" content="hive 其实是用 sql 来开发的 mapreduce 任务，其中的一些有优化技巧和 sql 优化也有相同的地方 在经过一周的 sql boy 历练以后，写 sql 的水平也算是更上一层楼了 虽然说hive 跑的都是t-1的离线数据，不怎么需要在意运行时间，但是比较 yarn 集群资源有限，使用尽量少的资源来完成尽量多的工作也是很棒的！这里总结一下一些 hql 优化上的技巧">
+<meta name="keywords" content="big-data">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hive sql 调优">
+<meta property="og:url" content="https://blog.ayang818.top/hive-sql/index.html">
+<meta property="og:site_name" content="Ayang818&#39;s blog">
+<meta property="og:description" content="hive 其实是用 sql 来开发的 mapreduce 任务，其中的一些有优化技巧和 sql 优化也有相同的地方 在经过一周的 sql boy 历练以后，写 sql 的水平也算是更上一层楼了 虽然说hive 跑的都是t-1的离线数据，不怎么需要在意运行时间，但是比较 yarn 集群资源有限，使用尽量少的资源来完成尽量多的工作也是很棒的！这里总结一下一些 hql 优化上的技巧">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog.ayang818.top/images/og_image.png">
+<meta property="og:updated_time" content="2021-07-12T15:02:56.632Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="hive sql 调优">
+<meta name="twitter:description" content="hive 其实是用 sql 来开发的 mapreduce 任务，其中的一些有优化技巧和 sql 优化也有相同的地方 在经过一周的 sql boy 历练以后，写 sql 的水平也算是更上一层楼了 虽然说hive 跑的都是t-1的离线数据，不怎么需要在意运行时间，但是比较 yarn 集群资源有限，使用尽量少的资源来完成尽量多的工作也是很棒的！这里总结一下一些 hql 优化上的技巧">
+<meta name="twitter:image" content="https://blog.ayang818.top/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/androidstudio.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="hive sql 调优" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/tags">分类</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+                <a class="navbar-item"
+                href="https://github.com/ayang818">Github</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Github" href="https://github.com/ayang818">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2021-03-06T06:24:00.000Z">2021-03-06</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    7 minutes 读完 (大约 1103 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                hive sql 调优
+            
+        </h1>
+        <div class="content">
+            <p>hive 其实是用 sql 来开发的 mapreduce 任务，其中的一些有优化技巧和 sql 优化也有相同的地方</p>
+<p>在经过一周的 sql boy 历练以后，写 sql 的水平也算是更上一层楼了</p>
+<p>虽然说hive 跑的都是t-1的离线数据，不怎么需要在意运行时间，但是比较 yarn 集群资源有限，使用尽量少的资源来完成尽量多的工作也是很棒的！这里总结一下一些 hql 优化上的技巧</p>
+<a id="more"></a>
+
+<p><strong>1. 所有分区表都需要指定分区查询</strong></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 反例</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>, user_id <span class="keyword">from</span> partition_table_name; <span class="comment">-- 执行起来会很慢，因为需要扫描所有分区</span></span><br><span class="line"><span class="comment">-- 正例</span></span><br><span class="line"><span class="keyword">select</span> <span class="keyword">id</span>,user_id <span class="keyword">from</span> partition_table_name <span class="keyword">where</span> <span class="built_in">date</span> = <span class="string">'$&#123;date&#125;'</span> <span class="comment">-- 只扫描制定的 date 分区</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 不要偷懒使用 * 查全部数据字段，需要什么字段拿什么</strong></p>
+<p>对于一些大宽表来说，可能有七八十个字段，但是实际上只用到了其中两三个字段，造成了严重的资源浪费</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 反例</span></span><br><span class="line"><span class="keyword">select</span></span><br><span class="line">	su.star_id,</span><br><span class="line">	au.user_id,</span><br><span class="line">	au.device_id</span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">	star_user_profile <span class="keyword">as</span> su</span><br><span class="line"><span class="keyword">join</span></span><br><span class="line">	(</span><br><span class="line">  	<span class="keyword">select</span></span><br><span class="line">    	*</span><br><span class="line">    <span class="keyword">from</span></span><br><span class="line">    	aweme_user_profile  <span class="comment">-- aweme_user_profile 可能有上百个字段</span></span><br><span class="line">    <span class="keyword">where</span> <span class="built_in">date</span> = $&#123;<span class="built_in">date</span>&#125;</span><br><span class="line">    <span class="keyword">and</span> user_id &gt; <span class="number">0</span></span><br><span class="line">  ) <span class="keyword">as</span> au</span><br><span class="line"> <span class="keyword">on</span> au.user_id = su.core_user_id;</span><br><span class="line"> </span><br><span class="line"> <span class="comment">-- 正例</span></span><br><span class="line"> <span class="keyword">select</span></span><br><span class="line">	su.star_id,</span><br><span class="line">	au.user_id,</span><br><span class="line">	au.device_id</span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">	star_user_profile <span class="keyword">as</span> su</span><br><span class="line"><span class="keyword">join</span></span><br><span class="line">	(</span><br><span class="line">  	<span class="keyword">select</span></span><br><span class="line">    	user_id,</span><br><span class="line">    	device_id</span><br><span class="line">    <span class="keyword">from</span></span><br><span class="line">    	aweme_user_profile </span><br><span class="line">    <span class="keyword">where</span> <span class="built_in">date</span> = $&#123;<span class="built_in">date</span>&#125;</span><br><span class="line">    <span class="keyword">and</span> user_id &gt; <span class="number">0</span></span><br><span class="line">  ) <span class="keyword">as</span> au</span><br><span class="line"> <span class="keyword">on</span> au.user_id = su.core_user_id;</span><br></pre></td></tr></table></figure>
+
+<p><strong>3. 分区条件都放到表后，join 前</strong></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 反例</span></span><br><span class="line"><span class="keyword">select</span> </span><br><span class="line">	ui.id, </span><br><span class="line">	ui.user_id,</span><br><span class="line">	ui.device_id,</span><br><span class="line">	di.device_brand</span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">	partition_user_profile_info <span class="keyword">as</span> ui </span><br><span class="line"><span class="keyword">left</span> <span class="keyword">join</span> </span><br><span class="line">	partition_device_info <span class="keyword">as</span> di</span><br><span class="line"><span class="keyword">on</span> </span><br><span class="line">	di.device_id = ui.device_id <span class="keyword">and</span> di.device_id &gt; <span class="number">0</span></span><br><span class="line"><span class="keyword">where</span> ui.date = <span class="string">'$&#123;date&#125;'</span> <span class="keyword">and</span> di.date = <span class="string">'$&#123;date&#125;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 正例</span></span><br><span class="line"><span class="keyword">select</span></span><br><span class="line">	ui.id,</span><br><span class="line">	ui.user_id,</span><br><span class="line">	ui.device_id,</span><br><span class="line">	di.device_brand</span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">	(<span class="keyword">select</span> <span class="keyword">id</span>, user_id, device_id <span class="keyword">from</span> partition_user_profile_info <span class="keyword">where</span> <span class="built_in">date</span> = <span class="string">'$&#123;date&#125;'</span>) <span class="keyword">as</span> ui</span><br><span class="line"><span class="keyword">left</span> <span class="keyword">join</span></span><br><span class="line">	(<span class="keyword">select</span> device_id, device_brand <span class="keyword">from</span> partition_device_info <span class="keyword">where</span> <span class="built_in">date</span> = <span class="string">'$&#123;date&#125;'</span>) <span class="keyword">as</span> di</span><br><span class="line"><span class="keyword">on</span> di.device_id = ui.device_id</span><br></pre></td></tr></table></figure>
+
+<p><strong>4. join时，改表的条件紧跟当前表，不要join一堆表后都放到一个on里面</strong></p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 反例</span></span><br><span class="line"><span class="keyword">select</span></span><br><span class="line">    g.star_id,</span><br><span class="line">    g.gender_distribution,</span><br><span class="line">    a.age_distribution,</span><br><span class="line">    p.province_distribution,</span><br><span class="line">    c.city_distribution,</span><br><span class="line">    d.device_brand_distribution,</span><br><span class="line">    <span class="keyword">unix_timestamp</span>() <span class="keyword">as</span> update_time</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">    p_gender_dist <span class="keyword">as</span> g</span><br><span class="line"><span class="keyword">join</span></span><br><span class="line">    p_age_dist <span class="keyword">as</span> a </span><br><span class="line"><span class="keyword">join</span></span><br><span class="line">    p_province_dist <span class="keyword">as</span> p </span><br><span class="line"><span class="keyword">join</span> </span><br><span class="line">    p_city_dist <span class="keyword">as</span> c</span><br><span class="line"><span class="keyword">join</span></span><br><span class="line">    p_device_brand_dist <span class="keyword">as</span> d </span><br><span class="line"><span class="keyword">on</span> </span><br><span class="line">	g.core_user_id = a.core_user_id</span><br><span class="line">	<span class="keyword">and</span> a.core_user_id = p.core_user_id</span><br><span class="line">	<span class="keyword">and</span> p.core_user_id = c.core_user_id</span><br><span class="line">	<span class="keyword">and</span> c.core_user_id = d.core_user_id</span><br><span class="line">    </span><br><span class="line"><span class="comment">-- 正例</span></span><br><span class="line"><span class="keyword">select</span></span><br><span class="line">    g.star_id,</span><br><span class="line">    g.gender_distribution,</span><br><span class="line">    a.age_distribution,</span><br><span class="line">    p.province_distribution,</span><br><span class="line">    c.city_distribution,</span><br><span class="line">    d.device_brand_distribution,</span><br><span class="line">    <span class="keyword">unix_timestamp</span>() <span class="keyword">as</span> update_time</span><br><span class="line"><span class="keyword">from</span></span><br><span class="line">    p_gender_dist <span class="keyword">as</span> g</span><br><span class="line"><span class="keyword">join</span></span><br><span class="line">    p_age_dist <span class="keyword">as</span> a <span class="keyword">on</span> g.core_user_id = a.core_user_id</span><br><span class="line"><span class="keyword">join</span></span><br><span class="line">    p_province_dist <span class="keyword">as</span> p <span class="keyword">on</span> a.core_user_id = p.core_user_id</span><br><span class="line"><span class="keyword">join</span> </span><br><span class="line">    p_city_dist <span class="keyword">as</span> c <span class="keyword">on</span> p.core_user_id = c.core_user_id</span><br><span class="line"><span class="keyword">join</span></span><br><span class="line">    p_device_brand_dist <span class="keyword">as</span> d <span class="keyword">on</span> c.core_user_id = d.core_user_id</span><br></pre></td></tr></table></figure>
+
+<p><strong>5. hive 参数调优</strong></p>
+<p><a href="https://spark.apache.org/docs/2.3.4/configuration.html">啥都比不过官方文档系列~</a></p>
+<ul>
+<li>在碰到一些临时表特别大的场景下，可能会产生某个 任务 内存不够的场景，添加内存参数；对于一些任务oom之后，会不断重试失败，浪费很多时间</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> spark.driver.memory = <span class="number">80</span>g;</span><br><span class="line"><span class="keyword">set</span> spark.executor.memory = <span class="number">80</span>g;</span><br><span class="line"><span class="keyword">set</span> spark.driver.maxResultSize=<span class="number">16</span>g;  <span class="comment">-- default 1g</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="1.png" alt="image-20210308202508074"></p>
+<ul>
+<li>yarn的资源分配 <a href="https://zhuanlan.zhihu.com/p/335881182">https://zhuanlan.zhihu.com/p/335881182</a>  yarn -&gt; nodemanager -&gt; container</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> spark.vcore.boost.ratio = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>利用好重试机制</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> spark.shuffle.io.maxRetries=<span class="number">1</span>; </span><br><span class="line"><span class="keyword">set</span> spark.shuffle.io.retryWait=<span class="number">0</span>s; </span><br><span class="line"><span class="keyword">set</span> spark.network.timeout=<span class="number">120</span>s;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用 external shuffle service 提高性能</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">set</span> spark.shuffle.hdfs.enabled</span><br></pre></td></tr></table></figure>
+
+<p><strong>6. sql 的严谨性</strong></p>
+<ul>
+<li>一条记录里经常会有各种空字段，记得对空字段进行处理</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 反例</span></span><br><span class="line">concat(":", tmp.province, cast(tmp.cnt as string))</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 正例</span></span><br><span class="line">concat_ws(":", case when tmp.province is NULL or tmp.province="" then "unknown" else tmp.province <span class="keyword">end</span>, <span class="keyword">cast</span>(tmp.cnt <span class="keyword">as</span> <span class="keyword">string</span>))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>做数据统计的时候，不要过分信任数据的准确性，需要自己做一层判断，例如</li>
+</ul>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="comment">-- 反例</span></span><br><span class="line">(<span class="keyword">select</span> author_id, item_id, user_id <span class="keyword">from</span> aweme_user_item_info) <span class="keyword">as</span> item_reach;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 正例</span></span><br><span class="line">(<span class="keyword">select</span> author_id, item_id, user_id <span class="keyword">from</span> aweme_user_item_info <span class="keyword">where</span> item_id &gt; <span class="number">0</span>) <span class="keyword">as</span> item_reach <span class="comment">-- 排除 item_id = 0 的脏数据</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<p><strong>其他常用函数</strong></p>
+<ul>
+<li>获取group by 后每一组对该列的排位。使用场景举例：获取所有博主的最近 2 条微博</li>
+</ul>
+<p>table: author_item_dict</p>
+<table>
+<thead>
+<tr>
+<th>author_id</th>
+<th>weibo_id</th>
+<th>create_time</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>23489032</td>
+<td>1615217421</td>
+</tr>
+<tr>
+<td>1</td>
+<td>12309780</td>
+<td>1615217419</td>
+</tr>
+<tr>
+<td>2</td>
+<td>43242511</td>
+<td>1615217418</td>
+</tr>
+<tr>
+<td>1</td>
+<td>45435346</td>
+<td>1615217422</td>
+</tr>
+</tbody></table>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span></span><br><span class="line">	author_id,</span><br><span class="line">	weibo_id</span><br><span class="line"><span class="keyword">from</span> </span><br><span class="line">	(</span><br><span class="line">  	<span class="keyword">select</span></span><br><span class="line">    	author_id,</span><br><span class="line">    	weibo_id,</span><br><span class="line">    	row_number <span class="keyword">over</span>(<span class="keyword">partition</span> <span class="keyword">by</span> author_id <span class="keyword">order</span> <span class="keyword">by</span> create_time) <span class="keyword">as</span> rn</span><br><span class="line">   	<span class="keyword">from</span></span><br><span class="line">    	author_item_dict</span><br><span class="line">  ) <span class="keyword">as</span> ai</span><br><span class="line">  <span class="keyword">where</span> </span><br><span class="line">  	ai.rn &gt;= <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>result:</p>
+<table>
+<thead>
+<tr>
+<th>author_id</th>
+<th>weibo_id</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>12309780</td>
+</tr>
+<tr>
+<td>1</td>
+<td>23489032</td>
+</tr>
+<tr>
+<td>2</td>
+<td>43242511</td>
+</tr>
+</tbody></table>
+
+        </div>
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/big-data/">big-data</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://computernetworking.oss-cn-hongkong.aliyuncs.com/temppic/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/python-decorator/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">python 装饰器从走路到跑路（误</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/micro-service-explore/">
+                <span class="level-item">微服务技术调研</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '2df080a3f11a34fc4f0d',
+        clientSecret: '3c6fefb8587a575f94ca5a00cdf6ad9e41ad0c0c',
+        id: '4beb0cbfccc5d11be1bfdd581c8a6598',
+        repo: 'comment-repo',
+        owner: 'ayang818',
+        admin: "ayang818",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818 (杨丰畅)">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Ayang818 (杨丰畅)
+                    </p>
+                    
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国，杭州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            57
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            0
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            38
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ayang818" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Github" href="https://github.com/ayang818">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/syh0313" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">syh0313</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://wzyxv1n.top/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">wenzhuan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">wzyxv1n.top</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/weixin_43434223" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">旧博客</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/DevOps/" style="font-size: 12px;">DevOps</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Kugga/" style="font-size: 10px;">Kugga</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/big-data/" style="font-size: 10px;">big-data</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/jetpack/" style="font-size: 10px;">jetpack</a> <a href="/tags/js/" style="font-size: 12px;">js</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/分布式理论/" style="font-size: 14px;">分布式理论</a> <a href="/tags/前后端分离/" style="font-size: 14px;">前后端分离</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 18px;">并发编程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/性能挑战赛/" style="font-size: 10px;">性能挑战赛</a> <a href="/tags/日常技能/" style="font-size: 10px;">日常技能</a> <a href="/tags/源码/" style="font-size: 10px;">源码</a> <a href="/tags/灵感/" style="font-size: 10px;">灵感</a> <a href="/tags/算法/" style="font-size: 12px;">算法</a> <a href="/tags/老代码/" style="font-size: 10px;">老代码</a> <a href="/tags/自嗨/" style="font-size: 10px;">自嗨</a> <a href="/tags/自我提升/" style="font-size: 10px;">自我提升</a> <a href="/tags/设计模式/" style="font-size: 18px;">设计模式</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/部门教程/" style="font-size: 12px;">部门教程</a> <a href="/tags/阶段总结/" style="font-size: 10px;">阶段总结</a> <a href="/tags/随笔/" style="font-size: 16px;">随笔</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow  ">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:15:46.000Z">2021-09-13</time></div>
+                    <a href="/系统复杂度到底是什么/" class="title has-link-black-ter is-size-6 has-text-weight-normal">系统复杂度到底是什么</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:11:06.000Z">2021-09-13</time></div>
+                    <a href="/SOME-TIPS/" class="title has-link-black-ter is-size-6 has-text-weight-normal"># SOME TIPS #</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-19T05:28:30.000Z">2021-04-19</time></div>
+                    <a href="/python-decorator/" class="title has-link-black-ter is-size-6 has-text-weight-normal">python 装饰器从走路到跑路（误</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-06T06:24:00.000Z">2021-03-06</time></div>
+                    <a href="/hive-sql/" class="title has-link-black-ter is-size-6 has-text-weight-normal">hive sql 调优</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-02-22T06:52:05.000Z">2021-02-22</time></div>
+                    <a href="/micro-service-explore/" class="title has-link-black-ter is-size-6 has-text-weight-normal">微服务技术调研</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="hive sql 调优" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 ayang818&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://blog.ayang818.top',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+<script src="/node_modules/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/node_modules/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

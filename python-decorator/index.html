@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>python 装饰器从走路到跑路（误 - Ayang818&#39;s blog</title>
+
+
+    <meta name="description" content="计时器的例子在平时工作中，我们可能需要为一些业务方法添加一些通用的功能，比如 日志打点、调用耗时、重试机制等。举个例子，我们要统计某些方法的调用耗时并上报，那么对于一个业务方法， import timedef biz_method(uid):    print(&apos;processing&apos;)    time.sleep(1) # 模拟业务代码运行  我们可能想到这么改造 import timedef">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 装饰器从走路到跑路（误">
+<meta property="og:url" content="https://blog.ayang818.top/python-decorator/index.html">
+<meta property="og:site_name" content="Ayang818&#39;s blog">
+<meta property="og:description" content="计时器的例子在平时工作中，我们可能需要为一些业务方法添加一些通用的功能，比如 日志打点、调用耗时、重试机制等。举个例子，我们要统计某些方法的调用耗时并上报，那么对于一个业务方法， import timedef biz_method(uid):    print(&apos;processing&apos;)    time.sleep(1) # 模拟业务代码运行  我们可能想到这么改造 import timedef">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog.ayang818.top/images/og_image.png">
+<meta property="og:updated_time" content="2021-07-12T15:02:56.642Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python 装饰器从走路到跑路（误">
+<meta name="twitter:description" content="计时器的例子在平时工作中，我们可能需要为一些业务方法添加一些通用的功能，比如 日志打点、调用耗时、重试机制等。举个例子，我们要统计某些方法的调用耗时并上报，那么对于一个业务方法， import timedef biz_method(uid):    print(&apos;processing&apos;)    time.sleep(1) # 模拟业务代码运行  我们可能想到这么改造 import timedef">
+<meta name="twitter:image" content="https://blog.ayang818.top/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/androidstudio.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="python 装饰器从走路到跑路（误" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/tags">分类</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+                <a class="navbar-item"
+                href="https://github.com/ayang818">Github</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Github" href="https://github.com/ayang818">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2021-04-19T05:28:30.000Z">2021-04-19</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    8 minutes 读完 (大约 1125 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                python 装饰器从走路到跑路（误
+            
+        </h1>
+        <div class="content">
+            <h2 id="计时器的例子"><a href="#计时器的例子" class="headerlink" title="计时器的例子"></a>计时器的例子</h2><p>在平时工作中，我们可能需要为一些业务方法添加一些通用的功能，比如 日志打点、调用耗时、重试机制等。举个例子，我们要统计某些方法的调用耗时并上报，那么对于一个业务方法，</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">biz_method</span><span class="params">(uid)</span>:</span></span><br><span class="line">    print(<span class="string">'processing'</span>)</span><br><span class="line">    time.sleep(<span class="number">1</span>) <span class="comment"># 模拟业务代码运行</span></span><br></pre></td></tr></table></figure>
+
+<p>我们可能想到这么改造</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">biz_method</span><span class="params">()</span>:</span></span><br><span class="line">    start = time.time()</span><br><span class="line">    print(<span class="string">'processing'</span>)</span><br><span class="line">    time.sleep(<span class="number">1</span>) <span class="comment"># 模拟业务代码运行</span></span><br><span class="line">    <span class="keyword">print</span> (<span class="string">'time spent %.4fs'</span>, % (time.time() - start))</span><br></pre></td></tr></table></figure>
+
+<p>但是这样的话，一大段业务无关的代码就混入了业务流程中，这显然很不合理，并且我们需要记录统计时间的方法也不止这一个，这个时候，我们就需要 <strong>装饰器</strong> 这个东东</p>
+<a id="more"></a>
+<p>python 的装饰器的用法类似于 java 的注解，使用装饰器改造上面的代码后，变成了</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">time_spent_count</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">()</span>:</span></span><br><span class="line">        start = time.time()</span><br><span class="line">        func()</span><br><span class="line">        <span class="keyword">print</span> (<span class="string">'time spent %.4fs'</span> % (time.time() - start))</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@time_spent_count</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">biz_method</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'processing'</span>)</span><br><span class="line">    time.sleep(<span class="number">1</span>) <span class="comment"># 模拟业务代码运行</span></span><br><span class="line"></span><br><span class="line">biz_method()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line"><span class="comment"># processing</span></span><br><span class="line"><span class="comment"># time spent 1.0033s</span></span><br></pre></td></tr></table></figure>
+
+<p>这样我们就可以对业务代码无侵入地增加一个计时功能。</p>
+<h2 id="带参数的计时器"><a href="#带参数的计时器" class="headerlink" title="带参数的计时器"></a>带参数的计时器</h2><p>这个时候，我们的产品有给我们提了一个需求：部分接口需要把调用耗时上传到统计平台，而不走 ELK。<br>抽象成代码，不就是多加一个是否上传的参数嘛~</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">time_spent_count</span><span class="params">(report=False)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(func)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner_wrap</span><span class="params">()</span>:</span></span><br><span class="line">            start = time.time()</span><br><span class="line">            func()</span><br><span class="line">            cost = time.time() - start</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">'time spent %.4fs'</span> % cost)</span><br><span class="line">            <span class="keyword">if</span> report:</span><br><span class="line">                report()</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">report</span><span class="params">()</span>:</span></span><br><span class="line">            print(<span class="string">"report to remote~"</span>)</span><br><span class="line">        <span class="keyword">return</span> inner_wrap</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@time_spent_count(True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">biz_method</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'processing'</span>)</span><br><span class="line">    time.sleep(<span class="number">1</span>) <span class="comment"># 模拟业务代码运行</span></span><br><span class="line"></span><br><span class="line">biz_method()</span><br></pre></td></tr></table></figure>
+
+<p>这里我们带参数的计时器就写好了，那么这里有人可能就要问了，<del>马老师，你这个不好用….</del>，为啥带参数的计时器比原来多了一个内部函数呀；原先的计时器是 time_spent_count -&gt; wrapper。怎么到了你这里就变成了 time_spent_count -&gt; wrapper -&gt; inner_wrap 了。</p>
+<p>其实装饰器的就是干了下面这么一件事情：接收一个函数，返回给你一个新函数<br>我们把装饰器的皮扒了吧 <del>害怕</del></p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 第一个例子中不带参的计时器等价于下面</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">time_spent_count</span><span class="params">(func)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">()</span>:</span></span><br><span class="line">        start = time.time()</span><br><span class="line">        func()</span><br><span class="line">        <span class="keyword">print</span> (<span class="string">'time spent %.4fs'</span> % (time.time() - start))</span><br><span class="line">    <span class="comment"># 把 wrapper 函数返回</span></span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">biz_method</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'processing'</span>)</span><br><span class="line">    time.sleep(<span class="number">1</span>) <span class="comment"># 模拟业务代码运行</span></span><br><span class="line"></span><br><span class="line">biz_method = time_spent_count(biz_method) <span class="comment"># 这里的这个biz_method 实际上就变成了 wrapper 函数了</span></span><br><span class="line">biz_method()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 第而个例子中带参的计时器等价于下面</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">time_spent_count</span><span class="params">(report=False)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(func)</span>:</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner_wrap</span><span class="params">()</span>:</span></span><br><span class="line">            start = time.time()</span><br><span class="line">            func()</span><br><span class="line">            cost = time.time() - start</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">'time spent %.4fs'</span> % cost)</span><br><span class="line">            <span class="keyword">if</span> report:</span><br><span class="line">                report()</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">report</span><span class="params">()</span>:</span></span><br><span class="line">            print(<span class="string">"report to remote~"</span>)</span><br><span class="line">        <span class="keyword">return</span> inner_wrap</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">biz_method</span><span class="params">()</span>:</span></span><br><span class="line">    print(<span class="string">'processing'</span>)</span><br><span class="line">    time.sleep(<span class="number">1</span>) <span class="comment"># 模拟业务代码运行</span></span><br><span class="line"></span><br><span class="line">biz_method = time_spent_count(report=<span class="literal">True</span>)(biz_method)</span><br><span class="line">biz_method()</span><br></pre></td></tr></table></figure>
+
+<h2 id="带参数的业务方法"><a href="#带参数的业务方法" class="headerlink" title="带参数的业务方法"></a>带参数的业务方法</h2><p>为了让有些看到这里还没懂得同学有作业抄，这里定义了一个平时可能最常用的形式：装饰器带参，业务方法也带参的例子</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> functools</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">time_spent_count</span><span class="params">(report=False)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">wrapper</span><span class="params">(func)</span>:</span></span><br><span class="line"><span class="meta">        @functools.wraps(func)</span></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">inner_wrap</span><span class="params">(*args, **kwargs)</span>:</span></span><br><span class="line">            start = time.time()</span><br><span class="line">            func(*args, **kwargs)</span><br><span class="line">            cost = time.time() - start</span><br><span class="line">            <span class="keyword">print</span> (<span class="string">'time spent %.4fs'</span> % cost)</span><br><span class="line">            <span class="keyword">if</span> report:</span><br><span class="line">                report()</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">report</span><span class="params">()</span>:</span></span><br><span class="line">            print(<span class="string">"report to remote~"</span>)</span><br><span class="line">        <span class="keyword">return</span> inner_wrap</span><br><span class="line">    <span class="keyword">return</span> wrapper</span><br><span class="line"></span><br><span class="line"><span class="meta">@time_spent_count(True)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">biz_method</span><span class="params">(data)</span>:</span></span><br><span class="line">    print(<span class="string">'processing %s'</span>% data)</span><br><span class="line">    time.sleep(<span class="number">1</span>) <span class="comment"># 模拟业务代码运行</span></span><br><span class="line"></span><br><span class="line">biz_method(<span class="string">"hahah"</span>)</span><br></pre></td></tr></table></figure>
+
+<p>有的同学可能又要问了，不对呀，你这个突然冒出来的 @functools.wraps 又是个啥呀，这个装饰器其实对于业务的执行结果来说没有影响。</p>
+<p>使用这个装饰器的原因是，装饰器其实返回了包含业务方法功能的另外一个函数，也就是说原有函数被狸猫换太子了耶~，原有函数的一些原信息就被丢失了，使用 functools.wraps 可以 <strong>保留原函数的元信息。</strong></p>
+<p>你可以分别去掉 time_spent_count 这个装饰器的 functools.wraps 测试一下</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 不使用 functools.wraps</span></span><br><span class="line">print(biz_method.__name__)</span><br><span class="line">&gt;&gt; inner_wrapper</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 functools.wraps</span></span><br><span class="line">print(biz_method.__name__)</span><br><span class="line">&gt;&gt; biz_method</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>看到这里，你总该可以说你知道装饰器是个啥了吧，好耶~</p>
+</blockquote>
+
+        </div>
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/python/">python</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://computernetworking.oss-cn-hongkong.aliyuncs.com/temppic/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/SOME-TIPS/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item"># SOME TIPS #</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/hive-sql/">
+                <span class="level-item">hive sql 调优</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '2df080a3f11a34fc4f0d',
+        clientSecret: '3c6fefb8587a575f94ca5a00cdf6ad9e41ad0c0c',
+        id: '4d984b9141dfd9f87a008a4b0f1bf135',
+        repo: 'comment-repo',
+        owner: 'ayang818',
+        admin: "ayang818",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818 (杨丰畅)">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Ayang818 (杨丰畅)
+                    </p>
+                    
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国，杭州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            57
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            0
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            38
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ayang818" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Github" href="https://github.com/ayang818">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/syh0313" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">syh0313</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://wzyxv1n.top/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">wenzhuan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">wzyxv1n.top</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/weixin_43434223" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">旧博客</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/DevOps/" style="font-size: 12px;">DevOps</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Kugga/" style="font-size: 10px;">Kugga</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/big-data/" style="font-size: 10px;">big-data</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/jetpack/" style="font-size: 10px;">jetpack</a> <a href="/tags/js/" style="font-size: 12px;">js</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/分布式理论/" style="font-size: 14px;">分布式理论</a> <a href="/tags/前后端分离/" style="font-size: 14px;">前后端分离</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 18px;">并发编程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/性能挑战赛/" style="font-size: 10px;">性能挑战赛</a> <a href="/tags/日常技能/" style="font-size: 10px;">日常技能</a> <a href="/tags/源码/" style="font-size: 10px;">源码</a> <a href="/tags/灵感/" style="font-size: 10px;">灵感</a> <a href="/tags/算法/" style="font-size: 12px;">算法</a> <a href="/tags/老代码/" style="font-size: 10px;">老代码</a> <a href="/tags/自嗨/" style="font-size: 10px;">自嗨</a> <a href="/tags/自我提升/" style="font-size: 10px;">自我提升</a> <a href="/tags/设计模式/" style="font-size: 18px;">设计模式</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/部门教程/" style="font-size: 12px;">部门教程</a> <a href="/tags/阶段总结/" style="font-size: 10px;">阶段总结</a> <a href="/tags/随笔/" style="font-size: 16px;">随笔</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow  ">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:15:46.000Z">2021-09-13</time></div>
+                    <a href="/系统复杂度到底是什么/" class="title has-link-black-ter is-size-6 has-text-weight-normal">系统复杂度到底是什么</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:11:06.000Z">2021-09-13</time></div>
+                    <a href="/SOME-TIPS/" class="title has-link-black-ter is-size-6 has-text-weight-normal"># SOME TIPS #</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-19T05:28:30.000Z">2021-04-19</time></div>
+                    <a href="/python-decorator/" class="title has-link-black-ter is-size-6 has-text-weight-normal">python 装饰器从走路到跑路（误</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-06T06:24:00.000Z">2021-03-06</time></div>
+                    <a href="/hive-sql/" class="title has-link-black-ter is-size-6 has-text-weight-normal">hive sql 调优</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-02-22T06:52:05.000Z">2021-02-22</time></div>
+                    <a href="/micro-service-explore/" class="title has-link-black-ter is-size-6 has-text-weight-normal">微服务技术调研</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="python 装饰器从走路到跑路（误" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 ayang818&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://blog.ayang818.top',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+<script src="/node_modules/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/node_modules/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

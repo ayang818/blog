@@ -1,0 +1,1692 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>标签: 并发编程 - Ayang818&#39;s blog</title>
+
+
+    <meta name="description" content="杨丰畅的博客">
+<meta name="keywords" content="Do something new!">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ayang818&#39;s blog">
+<meta property="og:url" content="https://blog.ayang818.top/tags/并发编程/index.html">
+<meta property="og:site_name" content="Ayang818&#39;s blog">
+<meta property="og:description" content="杨丰畅的博客">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog.ayang818.top/images/og_image.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ayang818&#39;s blog">
+<meta name="twitter:description" content="杨丰畅的博客">
+<meta name="twitter:image" content="https://blog.ayang818.top/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/androidstudio.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818&#39;s blog" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/tags">分类</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+                <a class="navbar-item"
+                href="https://github.com/ayang818">Github</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Github" href="https://github.com/ayang818">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+    <div class="card-content">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/tags">标签</a></li>
+            <li class="is-active"><a href="#" aria-current="page">并发编程</a></li>
+        </ul>
+        </nav>
+    </div>
+</div>
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-07-29T15:43:06.000Z">2020-07-29</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    a minute 读完 (大约 123 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/mit6-824/">mit6.824</a>
+            
+        </h1>
+        <div class="content">
+            <p>lab1 已经完工，但是遵循</p>
+<blockquote>
+<p>Collaboration Policy<br>…<br>Please do not publish your code or make it available to current or future 6.824 students. github.com repositories are public by default, so please don’t put your code there unless you make the repository private. You may find it convenient to use MIT’s GitHub, but be sure to create a private repository.</p>
+</blockquote>
+<p>所以我的代码就不开源了，所有的笔记我会在学习完所有课程，做完四个 lab 后整理后开源。</p>
+<p>upd: 做完第一个 mapreduce 后就没时间做其他的了…</p>
+
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-10T12:47:18.000Z">2019-10-10</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes 读完 (大约 901 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/Java中的锁优化-1/">Java中的锁优化(1)</a>
+            
+        </h1>
+        <div class="content">
+            <blockquote>
+<p> 部分内容参考《深入理解Java虚拟机》第五部分——高效并发</p>
+</blockquote>
+<h2 id="锁优化"><a href="#锁优化" class="headerlink" title="锁优化"></a>锁优化</h2><p>高效并发是JDK1.5-JDK1.6的一个重要改进，HotSpot虚拟机团队在开发这个版本的时候花了大量的精力去实现各种锁优化技术，比如适应性自旋，锁消除，锁粗化，轻量级锁和偏向锁等，这些技术都是为了在线程之间更加高效的共享数据，以及解决竞争问题。这篇文章将以概念介绍为主。</p>
+<h3 id="自旋锁与自适应自旋"><a href="#自旋锁与自适应自旋" class="headerlink" title="自旋锁与自适应自旋"></a>自旋锁与自适应自旋</h3><p>我们知道往往在讨论锁的互斥同步的时候，其对性能最大的损耗就是阻塞的实现，挂起线程和回复线程都要进入操作系统内核态完成。然而其实有些阻塞只是很短的时间，没有必要挂起线程，所以这个时候可以选择让线程进入一个忙循环，知道阻塞条件结束，这就是所谓的自旋锁，关于自旋的代码可以参照我的这篇文章——<a href="https://ayang818.gitee.io/blog/2019/07/16/Java原子性操作以及简单的锁的实现-1/">Java原子性操作以及不如来手写一个简单锁</a>，由于自旋是不断重试的过程，要是一直重试失败，就会造成CPU资源浪费，所以自旋需要设置次数；而所谓自适应自旋就是指根据前一次在同一个锁上的自旋时间，以及锁的拥有者的状态来判断自旋次数或是否自旋，这些在JDK1.6中都已经帮我们实现了。</p>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/Java/">Java</a>,&nbsp;<a class="has-link-grey -link" href="/tags/并发编程/">并发编程</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/Java中的锁优化-1/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-07T12:17:24.000Z">2019-10-07</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes 读完 (大约 1364 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/Leetcode的几道有意思的多线程题/">Leetcode的几道有意思的多线程题</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="前记"><a href="#前记" class="headerlink" title="前记"></a>前记</h2><p>最近一直在看Java的多线程编程,但苦于这东西有点过于偏向理论,结果今天上了Leetcode上看了下,发现居然有多线程相关的题目，(虽然只有五题),顺便放个链接吧，<a href="https://leetcode-cn.com/problemset/concurrency/">题目链接</a>。题目感觉就是让你使用一些同步工具类或者锁或其他机制来完成要求，挺有意思的.</p>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/Java/">Java</a>,&nbsp;<a class="has-link-grey -link" href="/tags/并发编程/">并发编程</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/Leetcode的几道有意思的多线程题/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-10-04T12:17:24.000Z">2019-10-04</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes 读完 (大约 876 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/Java中的对象锁/">Java中的对象锁(Monitor)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="Java中的对象锁"><a href="#Java中的对象锁" class="headerlink" title="Java中的对象锁"></a>Java中的对象锁</h2><p>说到对象锁，要与之对比就不得不讲到类锁。在写单例模式的时候其实经常会用在双重校验锁中用到类锁，如下面的代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> ClassLock &#123;</span><br><span class="line">    priavte volatiled ClassLock classLock;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">ClassLock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// init</span></span><br><span class="line">    &#125; </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> ClassLock <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (classLock ==  <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (ClassLock.class) &#123;</span><br><span class="line">                <span class="keyword">if</span> (classLock == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    classLock = <span class="keyword">new</span> ClassLock();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> classLock;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看到在上面的代码中我们是对一整个类进行加锁，包括直接在方法签名上使用synchronized关键字，这都是属于类锁的范畴。因为在调用一个类的实例的时候，当运行其中一个加锁的方法时，其他加锁的方法是不可以执行的。也就是说一个类其实只有一个类锁，它锁住的对象是一个类。但是对象锁不一样，一个类中可以有多个对象，也就是说对象锁在一个类的实例中不止一个, 而每个对象都可以成为一个Monitor。对象锁往往用于多个线程之间的协作，与之配套的工具是synchronized，wait，notify，notifyAll。</p>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/Java/">Java</a>,&nbsp;<a class="has-link-grey -link" href="/tags/并发编程/">并发编程</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/Java中的对象锁/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-28T04:40:39.000Z">2019-09-28</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes 读完 (大约 892 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/闭锁的几种实现/">Java的几种同步工具类(闭锁的实现)</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="什么是闭锁"><a href="#什么是闭锁" class="headerlink" title="什么是闭锁"></a>什么是闭锁</h2><p>闭锁是一种同步工具类，可以延迟线程的进度知道其进入终止状态。闭锁的作用就像是一扇门，在闭锁结束状态之前，这扇门就是关闭的，没有任何线程可以通过。当这扇门开启的时候，闭锁将不会改变状态，会一直维持开启的状态。闭锁可以用来确保某些活动直到其他活动都完成后才可以继续执行。</p>
+<h2 id="CountDownLatch实现"><a href="#CountDownLatch实现" class="headerlink" title="CountDownLatch实现"></a>CountDownLatch实现</h2><p>CountDownLatch主要有两个重要的方法。</p>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 次数减去1</span></span><br><span class="line">#countDown();</span><br><span class="line"><span class="comment">// 等待直到次数为0</span></span><br><span class="line">#await();</span><br></pre></td></tr></table></figure>
+
+<p>下面的栗子体现了闭锁的等待作用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Long <span class="title">timeTasks</span><span class="params">(Integer taskNum)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> CountDownLatch startGate = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">final</span> CountDownLatch endGate = <span class="keyword">new</span> CountDownLatch(taskNum);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; taskNum; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> finalI = i;</span><br><span class="line">        <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                System.out.println(Thread.currentThread().getName() +<span class="string">" is ready"</span>);</span><br><span class="line">                startGate.await();</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">                    System.out.println(Thread.currentThread().getName() + <span class="string">" thread is start"</span>);</span><br><span class="line">                &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                    endGate.countDown();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).start();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">    <span class="comment">// 在主线程中一起释放</span></span><br><span class="line">    startGate.countDown();</span><br><span class="line">    endGate.await();</span><br><span class="line">    <span class="keyword">long</span> end = System.currentTimeMillis();</span><br><span class="line">    <span class="keyword">return</span> end - start;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/Java/">Java</a>,&nbsp;<a class="has-link-grey -link" href="/tags/并发编程/">并发编程</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/闭锁的几种实现/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-04T06:23:06.000Z">2019-09-04</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes 读完 (大约 891 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/并发容器/">并发容器</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="并发容器与同步容器"><a href="#并发容器与同步容器" class="headerlink" title="并发容器与同步容器"></a>并发容器与同步容器</h2><p>同步容器类包括Vector与HashTable，他们实现线程安全的方法是——将他们的状态封装起来，并会每一个公有方法都是用synchronize进行同步，使得每次只有一个线程可以访问容器的状态。但是同步容器同样存在着不安全因素，所以需要客户端加锁的行为，详情可以看<a href="https://ayang818.gitee.io/blog/2019/08/31/Vector%E5%92%8CArrayList%E7%9A%84%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E6%80%A7/">我的上篇博客</a>。<br><br>而相比对于并发容器来说，同步容器将所有对容器状态的访问都串行化，以保证线程安全性，但是也严重严重降低了并发性。而并发容器是针对多个线程并发访问设计的，</p>
+<ul>
+<li>比如使用ConcurrentHashMap来代替HashMap，ConcurrentHashMap实现了ConcurrentMap这一接口，实现了一些computeIfAbset,getOrDefault,putIfAbsent这些方法</li>
+<li>Java5中增加了两种容器类型，Queue和BlockingQueue，他的并发容器提供了这么些实现包括，ConcurrentLinkedQueue(传统的FIFO队列)，PriorityQueue(优先队列)。Queue一族不会阻塞，如果队列为空，那么获取元素的操作将返回空值。</li>
+<li>BlockingQueue拓展了Queue，增加了可阻塞的插入和获取等操作，也就是阻塞队列。在生产者——消费者这种设计模式下，阻塞队列十分有用。</li>
+</ul>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/Java/">Java</a>,&nbsp;<a class="has-link-grey -link" href="/tags/并发编程/">并发编程</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/并发容器/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-09-01T05:09:42.000Z">2019-09-01</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    5 minutes 读完 (大约 822 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/从一个容器安全类引入单例模式/">从一个容器安全类引入单例模式</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="使用客户端加锁的Vector的复合操作"><a href="#使用客户端加锁的Vector的复合操作" class="headerlink" title="使用客户端加锁的Vector的复合操作"></a>使用客户端加锁的Vector的复合操作</h2>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/Java/">Java</a>,&nbsp;<a class="has-link-grey -link" href="/tags/并发编程/">并发编程</a>,&nbsp;<a class="has-link-grey -link" href="/tags/设计模式/">设计模式</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/从一个容器安全类引入单例模式/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-08-31T11:43:08.000Z">2019-08-31</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes 读完 (大约 945 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/Vector和ArrayList的线程安全性/">Vector和ArrayList的线程安全性&amp;&amp;浅析ArrayList源码</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="一个例子出发"><a href="#一个例子出发" class="headerlink" title="一个例子出发"></a>一个例子出发</h2><p>下面的一个例子展示了ArrayList的非线程安全，以及ArrayList的错误检查机制</p>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/Java/">Java</a>,&nbsp;<a class="has-link-grey -link" href="/tags/并发编程/">并发编程</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/Vector和ArrayList的线程安全性/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-08-30T08:35:15.000Z">2019-08-30</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    6 minutes 读完 (大约 952 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/Java对象的发布与逸出/">Java对象的发布与逸出&amp;&amp;线程封闭机制</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="Java对象的发布与逸出"><a href="#Java对象的发布与逸出" class="headerlink" title="Java对象的发布与逸出"></a>Java对象的发布与逸出</h2><p>发布一个对象的意思是指，是对象能够在当前作用域外的代码中使用。比如Unsafe包中没有暴露一个对外的构造器，它使用的是现在类内部创建一个对象的引用，然后return 回这个引用的方式。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe theUnsafe = <span class="keyword">new</span> Unsafe();</span><br><span class="line"></span><br><span class="line"><span class="meta">@CallerSensitive</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Unsafe <span class="title">getUnsafe</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Class&lt;?&gt; caller = Reflection.getCallerClass();</span><br><span class="line">    <span class="keyword">if</span> (!VM.isSystemDomainLoader(caller.getClassLoader()))</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SecurityException(<span class="string">"Unsafe"</span>);</span><br><span class="line">    <span class="keyword">return</span> theUnsafe;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/Java/">Java</a>,&nbsp;<a class="has-link-grey -link" href="/tags/并发编程/">并发编程</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/Java对象的发布与逸出/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+    
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-16T14:21:04.000Z">2019-07-16</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes 读完 (大约 1343 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                <a class="has-link-black-ter" href="/Java原子性操作以及简单的锁的实现-1/">Java原子性操作以及不如来手写一个简单锁</a>
+            
+        </h1>
+        <div class="content">
+            <h2 id="从i-问题的引入"><a href="#从i-问题的引入" class="headerlink" title="从i++问题的引入"></a>从i++问题的引入</h2><p>在多线程编程中我们经常会看到这样一份代码<br></p>
+<p>实现的计数器代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Counter</span> </span>&#123;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        i++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<br>
+        </div>
+        
+        
+        <div class="level is-mobile is-flex">
+        <div class="level-start">
+            
+            <div class="level-item is-size-7 is-uppercase">
+                <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                <a class="has-link-grey -link" href="/tags/Java/">Java</a>,&nbsp;<a class="has-link-grey -link" href="/tags/并发编程/">并发编程</a>
+            </div>
+            
+        </div>
+        <div class="level-start">
+            <div class="level-item">
+            <a class="button is-size-7 is-light" href="/Java原子性操作以及简单的锁的实现-1/#more">阅读更多</a>
+            </div>
+        </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818 (杨丰畅)">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Ayang818 (杨丰畅)
+                    </p>
+                    
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国，杭州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            57
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            0
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            38
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ayang818" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Github" href="https://github.com/ayang818">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/syh0313" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">syh0313</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://wzyxv1n.top/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">wenzhuan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">wzyxv1n.top</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/weixin_43434223" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">旧博客</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/DevOps/" style="font-size: 12px;">DevOps</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Kugga/" style="font-size: 10px;">Kugga</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/big-data/" style="font-size: 10px;">big-data</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/jetpack/" style="font-size: 10px;">jetpack</a> <a href="/tags/js/" style="font-size: 12px;">js</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/分布式理论/" style="font-size: 14px;">分布式理论</a> <a href="/tags/前后端分离/" style="font-size: 14px;">前后端分离</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 18px;">并发编程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/性能挑战赛/" style="font-size: 10px;">性能挑战赛</a> <a href="/tags/日常技能/" style="font-size: 10px;">日常技能</a> <a href="/tags/源码/" style="font-size: 10px;">源码</a> <a href="/tags/灵感/" style="font-size: 10px;">灵感</a> <a href="/tags/算法/" style="font-size: 12px;">算法</a> <a href="/tags/老代码/" style="font-size: 10px;">老代码</a> <a href="/tags/自嗨/" style="font-size: 10px;">自嗨</a> <a href="/tags/自我提升/" style="font-size: 10px;">自我提升</a> <a href="/tags/设计模式/" style="font-size: 18px;">设计模式</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/部门教程/" style="font-size: 12px;">部门教程</a> <a href="/tags/阶段总结/" style="font-size: 10px;">阶段总结</a> <a href="/tags/随笔/" style="font-size: 16px;">随笔</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:15:46.000Z">2021-09-13</time></div>
+                    <a href="/系统复杂度到底是什么/" class="title has-link-black-ter is-size-6 has-text-weight-normal">系统复杂度到底是什么</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:11:06.000Z">2021-09-13</time></div>
+                    <a href="/SOME-TIPS/" class="title has-link-black-ter is-size-6 has-text-weight-normal"># SOME TIPS #</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-19T05:28:30.000Z">2021-04-19</time></div>
+                    <a href="/python-decorator/" class="title has-link-black-ter is-size-6 has-text-weight-normal">python 装饰器从走路到跑路（误</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-06T06:24:00.000Z">2021-03-06</time></div>
+                    <a href="/hive-sql/" class="title has-link-black-ter is-size-6 has-text-weight-normal">hive sql 调优</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-02-22T06:52:05.000Z">2021-02-22</time></div>
+                    <a href="/micro-service-explore/" class="title has-link-black-ter is-size-6 has-text-weight-normal">微服务技术调研</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:15:46.000Z">2021-09-13</time></div>
+                    <a href="/系统复杂度到底是什么/" class="title has-link-black-ter is-size-6 has-text-weight-normal">系统复杂度到底是什么</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:11:06.000Z">2021-09-13</time></div>
+                    <a href="/SOME-TIPS/" class="title has-link-black-ter is-size-6 has-text-weight-normal"># SOME TIPS #</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-19T05:28:30.000Z">2021-04-19</time></div>
+                    <a href="/python-decorator/" class="title has-link-black-ter is-size-6 has-text-weight-normal">python 装饰器从走路到跑路（误</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-06T06:24:00.000Z">2021-03-06</time></div>
+                    <a href="/hive-sql/" class="title has-link-black-ter is-size-6 has-text-weight-normal">hive sql 调优</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-02-22T06:52:05.000Z">2021-02-22</time></div>
+                    <a href="/micro-service-explore/" class="title has-link-black-ter is-size-6 has-text-weight-normal">微服务技术调研</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818&#39;s blog" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 ayang818&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://blog.ayang818.top',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+<script src="/node_modules/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/node_modules/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

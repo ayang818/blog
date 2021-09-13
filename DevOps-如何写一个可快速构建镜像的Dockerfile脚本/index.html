@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>[DevOps] 如何写一个可快速构建镜像的Dockerfile脚本 - Ayang818&#39;s blog</title>
+
+
+    <meta name="description" content="本文不针对刚接触Docker和DevOps的初学者，一些初级资料可以查阅——https://yeasy.gitbooks.io/docker_practice/introduction/what.html  在一个CI/CD工作流中，我们在本地修改代码并提交后，CI系统会自动构建我们的代码并运行单元测试来验证本次提交的可行性。而这个构建很多时候为了屏蔽平台以及环境的差异性，往往会使用Docker">
+<meta name="keywords" content="DevOps">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[DevOps] 如何写一个可快速构建镜像的Dockerfile脚本">
+<meta property="og:url" content="https://blog.ayang818.top/DevOps-如何写一个可快速构建镜像的Dockerfile脚本/index.html">
+<meta property="og:site_name" content="Ayang818&#39;s blog">
+<meta property="og:description" content="本文不针对刚接触Docker和DevOps的初学者，一些初级资料可以查阅——https://yeasy.gitbooks.io/docker_practice/introduction/what.html  在一个CI/CD工作流中，我们在本地修改代码并提交后，CI系统会自动构建我们的代码并运行单元测试来验证本次提交的可行性。而这个构建很多时候为了屏蔽平台以及环境的差异性，往往会使用Docker">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog.ayang818.top/images/og_image.png">
+<meta property="og:updated_time" content="2021-07-12T15:02:56.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[DevOps] 如何写一个可快速构建镜像的Dockerfile脚本">
+<meta name="twitter:description" content="本文不针对刚接触Docker和DevOps的初学者，一些初级资料可以查阅——https://yeasy.gitbooks.io/docker_practice/introduction/what.html  在一个CI/CD工作流中，我们在本地修改代码并提交后，CI系统会自动构建我们的代码并运行单元测试来验证本次提交的可行性。而这个构建很多时候为了屏蔽平台以及环境的差异性，往往会使用Docker">
+<meta name="twitter:image" content="https://blog.ayang818.top/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/androidstudio.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="[DevOps] 如何写一个可快速构建镜像的Dockerfile脚本" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/tags">分类</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+                <a class="navbar-item"
+                href="https://github.com/ayang818">Github</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Github" href="https://github.com/ayang818">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-04-12T14:59:58.000Z">2020-04-12</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    19 minutes 读完 (大约 2901 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                [DevOps] 如何写一个可快速构建镜像的Dockerfile脚本
+            
+        </h1>
+        <div class="content">
+            <blockquote>
+<p>本文不针对刚接触Docker和DevOps的初学者，一些初级资料可以查阅——<a href="https://yeasy.gitbooks.io/docker_practice/introduction/what.html">https://yeasy.gitbooks.io/docker_practice/introduction/what.html</a></p>
+</blockquote>
+<p>在一个CI/CD工作流中，我们在本地修改代码并提交后，CI系统会自动构建我们的代码并运行单元测试来验证本次提交的可行性。而这个构建很多时候为了屏蔽平台以及环境的差异性，往往会使用Docker来构建。构建一个Docker image绕不开的话题就是Dockerfile脚本该怎么写。不同的项目事实上编写的Dockerfile遇到的痛点往往不一样。本文针对的痛点是——构建速度慢。针对这个问题，我们首先得了解一下Docker build中的cache机制。</p>
+<a id="more"></a>
+
+<h1 id="Docker-build中的cache机制"><a href="#Docker-build中的cache机制" class="headerlink" title="Docker build中的cache机制"></a>Docker build中的cache机制</h1><p>我们知道在构建一个Docker image的时候，Dockerfile中每一条命令执行完后，都是会构造出一层新的layer附加到镜像上。但是这样的话，我的每个Docker image大小都差不多有500M左右，那么来个50个左右一款入门级服务器岂不是就存不下了？</p>
+<p>事实上在构建一个新的镜像或者拉取一个新的镜像的时候，由于我们是分层逐步构建，所以在构建每一层的时候，Docker都会检验这一层是否已经存在了？如果这一层已经存在了，那么他就会复用已经构建好或者拉取好的该层，也就不必花时间重复构建了，自然也不会重复占用内存。</p>
+<p><img src="1.png" alt="Using cache表示这层不需要构建，直接使用缓存即可"></p>
+<p>但是这里有一个问题，Docker是如何判断一个即将被构建但是还没有被构建的镜像已经存在的呢？这个判断已经存在的标准是什么？</p>
+<h1 id="cache机制是如何实现的"><a href="#cache机制是如何实现的" class="headerlink" title="cache机制是如何实现的"></a>cache机制是如何实现的</h1><p>如果你熟悉Docker的话，Docker的镜像实际上是由镜像层文件系统内容和镜像Json文件组成，每一个Docker镜像都含有一个唯一的16进制12位的image id。这是下面的基础</p>
+<p>假设我有这样一个Dockerfile</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">From centos:7</span><br><span class="line">RUN yum update -y</span><br><span class="line">RUN <span class="built_in">echo</span> <span class="string">"echo 'hello world'"</span> &gt;&gt; /usr/share/starter.sh</span><br><span class="line">RUN chmod u+x /usr/share/starter.sh</span><br><span class="line">ENTRYPOINT [<span class="string">'/user/share/starter.sh'</span>]</span><br></pre></td></tr></table></figure>
+
+<p>对于这样一个Dockerfile来说。</p>
+<p><strong>假设以下内容为上述Dockerfile的第一次构建</strong></p>
+<p>有一个入口命令叫做 From，我们通常会引用一个父镜像来作为即将构建的镜像的基础环境。这个父镜像有一个唯一的image id和唯一对应的json文件。这个时候我们执行 <code>docker build</code> 命令时，Docker Daemon就会获取<code>centos:7</code>的镜像ID，并提取这个<code>centos:7</code>这个镜像json文件中的内容，作为新的镜像的基础json内容，并把该镜像作为构建 <code>run yum update -y</code> 该层的基础。</p>
+<p>接着我们来到了 <code>RUN yum update -y</code> 这条命令，这条命令base在From命令之上，他会对文件系统的内容做一次更新，所有被更新的文件，都会保留在新构建的镜像层。并且在现有json的Cmd属性中更新一条 <code>yum ipdate -y</code> 命令。这样就完成了一条非From命令的构建。其实就是产生了一个新的镜像。新的镜像是上一条命令产生镜像的子镜像。<code>centos:7</code>就是第二条命令构建出镜像的父镜像。</p>
+<p>所以有了这么一个想法——我们是否可以在构建 Dockerfile 一条命令之前，就知道即将构建出的新的镜像的形态呢？</p>
+<p>我们通过对第一次构建的分析，大致知道了，标志一个镜像有以下三个特点。</p>
+<ol>
+<li>父镜像的ID。</li>
+<li>父镜像向自己构建时，修改的Json文件内容，在上述例子中就是Cmd属性中增添了一条新的 <code>yum update -y</code> 命令。</li>
+<li>镜像层文件系统的更新，对应上述例子就是运行 <code>yum update -y</code> 后文件系统的更新。</li>
+</ol>
+<p>由于第三点是更新后的，在我们没有构建出镜像时无法比较。所以我们其实可以认为，在下一次执行上述Dockerfile的第二条命令前，假如</p>
+<ol>
+<li>有一个镜像的父镜像为 <code>centos:7</code>。</li>
+<li>有一个镜像的json文件相比父镜像也只在Cmd属性中添加了 <code>yum update -y</code> 命令。</li>
+</ol>
+<p>那么我们就可以认为即将构造出的镜像已经存在，可以使用已经构造好了的缓存，无需重复构建了。</p>
+<p>其实这么一波分析下来，我们已经大致知道了cache机制是这么工作的了：<strong>在执行命令构造一个镜像前，遍历本地所有镜像，若发现有镜像与即将构建出的镜像一致（这里的判定就是通过1，2两点判断的）时，将找到的镜像作为 cache 镜像，复用 cache 镜像作为构建结果。</strong></p>
+<p>这种树状的镜像关系决定了，如果我修改了第N次命令，那么所有&gt;N的命令都无法使用缓存，因为从第N个分支开始他们就不存在一棵已有的枝干上了。</p>
+<p>但是其实如果仔细想还是有问题的。如果我有如下Dockerfile</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">From centos:7</span><br><span class="line">RUN yum update -y</span><br><span class="line">COPY starter.sh /user/share/starter.sh</span><br><span class="line">ENTRYPOINT [<span class="string">'/user/share/starter.sh'</span>]</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p><code>starter.sh</code> 是我在外部的一个文件，我的第三条命令没有变，但是 <code>starter.sh</code> 中的内容却变了，这个时候单单按照上面的分析，我们是可以继续使用构建好了的cache的。如果这样的话我们修改了starter.sh的内容，但是最后打包出来的镜像运行结果却不是我们修改后的预期，所以这是不合法的。</p>
+<p>对于这些根据文件内容来决定表现结果的命令，Docker 采用的方式是对这些文件内容做一个checksum（校验和），如果所有校验和相同，则判断可以使用缓存。若是文件有变动，则不可以使用缓存。</p>
+</li>
+<li><p>RUN 命令存在外部依赖，对于第二个 <code>yum update -y</code> 命令来说，随着时间的推移，外部的软件源会越来越多，不同时间点执行的虽然都是相同命令，但是更新的文件数量却不一样。对于这种情况，我们可以使用参数 <code>--no-cache</code> 确保获取最新的外部依赖，命令为<code>docker build --no-cache -t image_name</code> 。</p>
+</li>
+</ol>
+<h1 id="利用Docker-build-中的cache机制来加速Docker-image的构建"><a href="#利用Docker-build-中的cache机制来加速Docker-image的构建" class="headerlink" title="利用Docker build 中的cache机制来加速Docker image的构建"></a>利用Docker build 中的cache机制来加速Docker image的构建</h1><p> 什么场景下需要加速Docker image的构建呢？</p>
+<p>举个生产环境中的例子：</p>
+<p>我们有一个maven项目对应的Dockerfile（未使用cache机制）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">FROM maven:3-jdk-8-alpine</span><br><span class="line"></span><br><span class="line">COPY ./ /app</span><br><span class="line"></span><br><span class="line">WORKDIR /app</span><br><span class="line"></span><br><span class="line">RUN mvn clean install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决时区错误问题</span></span><br><span class="line">RUN ln -snf /usr/share/zoneinfo/<span class="variable">$&#123;TZ&#125;</span> /etc/localtime &amp;&amp; <span class="built_in">echo</span> <span class="variable">$&#123;TZ&#125;</span> &gt; /etc/timezone</span><br><span class="line"></span><br><span class="line">ARG JAR_FILE=kugga-starter/target/*.jar</span><br><span class="line"></span><br><span class="line">COPY <span class="variable">$&#123;JAR_FILE&#125;</span> app.jar</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [<span class="string">"java"</span>,<span class="string">"-Djava.security.egd=file:/dev/./urandom"</span>,<span class="string">"-jar"</span>,<span class="string">"app.jar"</span>]</span><br></pre></td></tr></table></figure>
+
+<p>对于这样一个maven项目，我们在运行 <code>mvn clean install</code> 时，会先查看本地是否有依赖包，然后再查看远程仓库是否有依赖包，最后是查看中央仓库。在本地运行 <code>mvn clean install</code> 会非常快，因为要是本地没有，从远程下了之后，之后每一次执行都是从本地来导包，不需要长时间的网络I/O等待时间。但是在镜像中构建时，每一次构建镜像都是即开即用即弃的，这意味着每一次构建容器都需要花费大量时间在下载依赖包上。我的一些项目在不利用cache机制写Dockerfile前，构建一次镜像需要半个小时，这真的一点都不敏捷。</p>
+<p>那么如何利用好Docker的缓存机制呢来解决这个每次构建都需要下载依赖包的问题呢？</p>
+<p>我们其实有 2 个原则</p>
+<ol>
+<li><strong>把需要变动频率高的文件才可以执行的命令往后放，这样不会让缓存机制失效。</strong>（这里其实特别像数据库中的事务操作准则，在一个事务中，执行时间长的操作需要尽可能放后，这样这条耗时长的操作影响的行持有行锁时间才会短）</li>
+<li><strong>利用变动频率少的文件，来做掉可以影响耗时的工作。让其可以利用缓存。</strong></li>
+</ol>
+<p>有了上述两个原则，我们分析一个maven项目，maven项目中变更较少的其实就是 pom.xml 文件，而耗时较长的下载依赖包其实也就是由 pom.xml 来决定的。</p>
+<p>那么其实我们可以先把根目录下的 pom.xml 文件复制到一个新的文件夹中，假设是 /lib，如果是个多模块的maven项目，就在 /lib 下创建和子模块同名文件夹，然后将子模块的pom.xml 复制进去 ，最后在 /lib 下执行 <code>mvn clean install</code>。</p>
+<p>这样的话。我们利用了改变较少的 pom.xml 就下载好了项目需要的所有依赖包到本地了。并且这个镜像是可以被缓存下来并再次利用的。</p>
+<p>接下来我们再在项目路径下运行<code>mvn clean install</code>，这个时候由于依赖包已经在本地已经下载好了，所以漫长的网络I/O等待，就可以直接编译了。</p>
+<p>我们修改后的 pom.xml 如下</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">FROM maven:3-jdk-8-alpine</span><br><span class="line"></span><br><span class="line"><span class="comment"># 工作目录</span></span><br><span class="line">ENV HOME=/app</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用于构建缓存层的临时目录</span></span><br><span class="line">ENV LIB=/app/lib</span><br><span class="line"></span><br><span class="line"><span class="comment"># 替换maven配置</span></span><br><span class="line">COPY mvn_setting.xml /usr/share/maven/conf/settings.xml</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建镜像缓存依赖层</span></span><br><span class="line">RUN mkdir -p <span class="variable">$LIB</span> \</span><br><span class="line">    &amp;&amp; mkdir -p <span class="variable">$LIB</span>/kugga-netty \</span><br><span class="line">    &amp;&amp; mkdir -p <span class="variable">$LIB</span>/kugga-services \</span><br><span class="line">    &amp;&amp; mkdir -p <span class="variable">$LIB</span>/kugga-starter \</span><br><span class="line">    &amp;&amp; mkdir -p <span class="variable">$LIB</span>/kugga-utils</span><br><span class="line"></span><br><span class="line"><span class="comment"># copy pom.xml和子模块的pom.xml 到 新的目录</span></span><br><span class="line">COPY pom.xml <span class="variable">$LIB</span>/pom.xml</span><br><span class="line">COPY kugga-netty/pom.xml <span class="variable">$LIB</span>/kugga-netty/pom.xml</span><br><span class="line">COPY kugga-services/pom.xml <span class="variable">$LIB</span>/kugga-services/pom.xml</span><br><span class="line">COPY kugga-starter/pom.xml <span class="variable">$LIB</span>/kugga-starter/pom.xml</span><br><span class="line">COPY kugga-utils/pom.xml <span class="variable">$LIB</span>/kugga-utils/pom.xml</span><br><span class="line"></span><br><span class="line">WORKDIR <span class="variable">$LIB</span></span><br><span class="line"></span><br><span class="line">RUN mvn clean install</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------- 直到这里，只要pom.xml文件不变动，就可以一直使用缓存，无需重复构建 ----------------</span></span><br><span class="line"></span><br><span class="line">COPY /. <span class="variable">$HOME</span></span><br><span class="line"></span><br><span class="line">WORKDIR <span class="variable">$HOME</span></span><br><span class="line"></span><br><span class="line">RUN mvn clean install</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解决时区错误问题</span></span><br><span class="line">ENV TZ=Asia/Shanghai</span><br><span class="line">RUN ln -snf /usr/share/zoneinfo/<span class="variable">$&#123;TZ&#125;</span> /etc/localtime &amp;&amp; <span class="built_in">echo</span> <span class="variable">$&#123;TZ&#125;</span> &gt; /etc/timezone</span><br><span class="line"></span><br><span class="line">ARG JAR_FILE=kugga-starter/target/*.jar</span><br><span class="line"></span><br><span class="line">RUN cp <span class="variable">$&#123;HOME&#125;</span>/<span class="variable">$&#123;JAR_FILE&#125;</span> <span class="variable">$&#123;HOME&#125;</span>/app.jar</span><br><span class="line"></span><br><span class="line">ENTRYPOINT [<span class="string">"java"</span>,<span class="string">"-Djava.security.egd=file:/dev/./urandom"</span>,<span class="string">"-jar"</span>,<span class="string">"/app/app.jar"</span>]</span><br></pre></td></tr></table></figure>
+
+<p>有了我们优化过后的 Dockerfile 文件，构建镜像的时间从半小时缩短到了两分钟。这才叫敏捷！类似于需要花大量时间在下载依赖包的项目其实都可以采用类似的解决方案，只要遵循上面的两点原则即可。</p>
+
+        </div>
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/DevOps/">DevOps</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://computernetworking.oss-cn-hongkong.aliyuncs.com/temppic/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/DevOps-使用Azure-pipeline为你的应用构建CI-CD流水线/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">[DevOps] 使用Azure pipeline + Github为你的应用构建CI/CD流水线</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/java-instrument/">
+                <span class="level-item">浅析Java强大的动态Instrumention能力</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '2df080a3f11a34fc4f0d',
+        clientSecret: '3c6fefb8587a575f94ca5a00cdf6ad9e41ad0c0c',
+        id: '227a62d85c016b689f07c5d3cfa1715d',
+        repo: 'comment-repo',
+        owner: 'ayang818',
+        admin: "ayang818",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818 (杨丰畅)">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Ayang818 (杨丰畅)
+                    </p>
+                    
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国，杭州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            57
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            0
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            38
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ayang818" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Github" href="https://github.com/ayang818">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/syh0313" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">syh0313</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://wzyxv1n.top/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">wenzhuan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">wzyxv1n.top</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/weixin_43434223" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">旧博客</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/DevOps/" style="font-size: 12px;">DevOps</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Kugga/" style="font-size: 10px;">Kugga</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/big-data/" style="font-size: 10px;">big-data</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/jetpack/" style="font-size: 10px;">jetpack</a> <a href="/tags/js/" style="font-size: 12px;">js</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/分布式理论/" style="font-size: 14px;">分布式理论</a> <a href="/tags/前后端分离/" style="font-size: 14px;">前后端分离</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 18px;">并发编程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/性能挑战赛/" style="font-size: 10px;">性能挑战赛</a> <a href="/tags/日常技能/" style="font-size: 10px;">日常技能</a> <a href="/tags/源码/" style="font-size: 10px;">源码</a> <a href="/tags/灵感/" style="font-size: 10px;">灵感</a> <a href="/tags/算法/" style="font-size: 12px;">算法</a> <a href="/tags/老代码/" style="font-size: 10px;">老代码</a> <a href="/tags/自嗨/" style="font-size: 10px;">自嗨</a> <a href="/tags/自我提升/" style="font-size: 10px;">自我提升</a> <a href="/tags/设计模式/" style="font-size: 18px;">设计模式</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/部门教程/" style="font-size: 12px;">部门教程</a> <a href="/tags/阶段总结/" style="font-size: 10px;">阶段总结</a> <a href="/tags/随笔/" style="font-size: 16px;">随笔</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow  ">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:15:46.000Z">2021-09-13</time></div>
+                    <a href="/系统复杂度到底是什么/" class="title has-link-black-ter is-size-6 has-text-weight-normal">系统复杂度到底是什么</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:11:06.000Z">2021-09-13</time></div>
+                    <a href="/SOME-TIPS/" class="title has-link-black-ter is-size-6 has-text-weight-normal"># SOME TIPS #</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-19T05:28:30.000Z">2021-04-19</time></div>
+                    <a href="/python-decorator/" class="title has-link-black-ter is-size-6 has-text-weight-normal">python 装饰器从走路到跑路（误</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-06T06:24:00.000Z">2021-03-06</time></div>
+                    <a href="/hive-sql/" class="title has-link-black-ter is-size-6 has-text-weight-normal">hive sql 调优</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-02-22T06:52:05.000Z">2021-02-22</time></div>
+                    <a href="/micro-service-explore/" class="title has-link-black-ter is-size-6 has-text-weight-normal">微服务技术调研</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="[DevOps] 如何写一个可快速构建镜像的Dockerfile脚本" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 ayang818&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://blog.ayang818.top',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+<script src="/node_modules/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/node_modules/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

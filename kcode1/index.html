@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>快手kcode程序设计大赛初赛总结 - Ayang818&#39;s blog</title>
+
+
+    <meta name="description" content="最终分数：13622.19仓库地址：https://github.com/ayang818/KCoder-First   upd: 2020/7 复赛结束，最终排名 28/647复赛赛题详情及代码： https://github.com/ayang818/2020-kcode-2r复赛的文件格式和处理读入流的方式和初赛差不多，最重要的查找计算最长链路的核心代码——https://github.c">
+<meta name="keywords" content="性能挑战赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="快手kcode程序设计大赛初赛总结">
+<meta property="og:url" content="https://blog.ayang818.top/kcode1/index.html">
+<meta property="og:site_name" content="Ayang818&#39;s blog">
+<meta property="og:description" content="最终分数：13622.19仓库地址：https://github.com/ayang818/KCoder-First   upd: 2020/7 复赛结束，最终排名 28/647复赛赛题详情及代码： https://github.com/ayang818/2020-kcode-2r复赛的文件格式和处理读入流的方式和初赛差不多，最重要的查找计算最长链路的核心代码——https://github.c">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog.ayang818.top/images/og_image.png">
+<meta property="og:updated_time" content="2021-07-12T15:02:56.638Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="快手kcode程序设计大赛初赛总结">
+<meta name="twitter:description" content="最终分数：13622.19仓库地址：https://github.com/ayang818/KCoder-First   upd: 2020/7 复赛结束，最终排名 28/647复赛赛题详情及代码： https://github.com/ayang818/2020-kcode-2r复赛的文件格式和处理读入流的方式和初赛差不多，最重要的查找计算最长链路的核心代码——https://github.c">
+<meta name="twitter:image" content="https://blog.ayang818.top/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/androidstudio.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="快手kcode程序设计大赛初赛总结" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/tags">分类</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+                <a class="navbar-item"
+                href="https://github.com/ayang818">Github</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Github" href="https://github.com/ayang818">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2020-07-02T11:33:57.000Z">2020-07-02</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    28 minutes 读完 (大约 4218 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                快手kcode程序设计大赛初赛总结
+            
+        </h1>
+        <div class="content">
+            <blockquote>
+<p>最终分数：13622.19<br>仓库地址：<a href="https://github.com/ayang818/KCoder-First">https://github.com/ayang818/KCoder-First</a></p>
+</blockquote>
+<blockquote>
+<p>upd: 2020/7 复赛结束，最终排名 28/647<br>复赛赛题详情及代码： <a href="https://github.com/ayang818/2020-kcode-2r">https://github.com/ayang818/2020-kcode-2r</a><br>复赛的文件格式和处理读入流的方式和初赛差不多，最重要的查找计算最长链路的核心代码——<a href="https://github.com/ayang818/2020-kcode-2r/blob/master/src/main/java/com/kuaishou/kcode/KcodeAlertAnalysisImpl.java#L319">https://github.com/ayang818/2020-kcode-2r/blob/master/src/main/java/com/kuaishou/kcode/KcodeAlertAnalysisImpl.java#L319</a> ， 使用记忆化搜索完成，其余常规思路可以参照初赛（感觉自己初赛写的代码拓展性还行）</p>
+</blockquote>
+<p>为时14天的kcode初赛算是结束了（6/17 - 7/1），由于个人的时间安排关系，我差不多是从24号开始正式开始写代码的。由于分数不算很高，排名按照封榜前大概是 （20 ~ 30） / 100，估计还有一大堆没写出来的，毕竟群里900多号人，但是前10的大佬们已经基本都是2.5w+了，但是由于爬分的过程还是非常有趣的，所以还是还是打算写一篇博客来梳理一下优化的过程。</p>
+<p>我的爬分过程：<strong>600 -&gt; 3600 -&gt;   5000 -&gt; 9400 -&gt;  11000 -&gt; 13600</strong></p>
+<a id="more"></a>
+<p>在分析优化方案之前先做一下赛题解析</p>
+<h2 id="题目内容"><a href="#题目内容" class="headerlink" title="题目内容"></a>题目内容</h2><p>实现进程内对微服务调用信息的分析和查询系统，要求包含的功能如下：</p>
+<ul>
+<li>接收和分析调用信息的接口</li>
+<li>根据给定的条件进行查询和分析，描述如下：<ul>
+<li>输入主调服务名、被调服务名和时间（分钟粒度），返回在这一分钟内主被调按ip聚合的成功率和P99；</li>
+<li>输入被调服务名和一个时间范围（分钟粒度, <strong>==闭区间==</strong>），返回在区间内被调的平均成功率</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据和输入输出说明："><a href="#数据和输入输出说明：" class="headerlink" title="数据和输入输出说明："></a>数据和输入输出说明：</h2><p>输入数据格式：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">每个调用记录存储在一行，数据直接以逗号分割(,), 换行符号(\n)</span><br><span class="line"></span><br><span class="line">主调服务名,主调方IP,被调服务名,被调方IP,结果,耗时(ms), 调用发生的时间戳(ms)</span><br><span class="line">commentService,172.17.60.2,userServie,172.17.60.3,true,89,1590975771020</span><br><span class="line">commentService,172.17.60.3,userServie,172.17.60.4,false,70,1590975771025</span><br><span class="line">commentService,172.17.60.2,userServie,172.17.60.3,true,103,1590975771030</span><br><span class="line">commentService,172.17.60.3,userServie,172.17.60.4,true,79,1590975771031</span><br><span class="line">commentService2,172.17.60.3,userServie,172.17.60.4,false,88,1590975771031</span><br><span class="line">commentService2,172.17.60.3,userServie,172.17.60.4,true,91,1590975771032</span><br></pre></td></tr></table></figure>
+
+<p>成功率定义：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">单位时间内被调服务成功率 =  （单位时间内被调用结果为ture的次数）/ 单位时间内总被调用次数  【结果换算成百分比，小数点后保留两位数字,不足两位补0，其余位数直接舍弃】</span><br><span class="line"></span><br><span class="line">以上示例数据计算一分钟的成功率</span><br><span class="line"> - （2020-06-01 09:42）userServie在被调成功率: 4/6= 66.66%</span><br><span class="line"> - （2020-06-01 09:42）userServie在172.17.60.4机器上成功率: 2 / 4 = 50.00%</span><br><span class="line"> 如无特殊说明，赛题中说的成功率以单位时间为一分钟计算</span><br></pre></td></tr></table></figure>
+
+<p>如果计算结果是0，请表示成 <strong>.00%</strong></p>
+<p>查询输出格式说明：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">查询1（checkPair）：</span><br><span class="line">输入：主调服务名、被调服务名和时间（分钟粒度）</span><br><span class="line">输出：返回在这一分钟内主被调按ip聚合的成功率和P99, 无调用返回空list （不要求顺序）</span><br><span class="line">输入示例：commentService，userServie，2020-06-01 09:42</span><br><span class="line">输出示例：</span><br><span class="line">172.17.60.3,172.17.60.4,50.00%,79</span><br><span class="line">172.17.60.2,172.17.60.3,100.00%,103</span><br><span class="line"></span><br><span class="line">查询2（checkResponder）：</span><br><span class="line">输入： 被调服务名、开始时间和结束时间</span><br><span class="line">输出：平均成功率，无调用结果返回 -1.00%</span><br><span class="line">平均成功率 = （被调服务在区间内各分钟成功率总和）/ (存在调用的分钟数）【结果换算成百分比，小数点后保留两位数字,不足两位补0，其他位直接舍弃，不进位】</span><br><span class="line"></span><br><span class="line">输入示例：userServie, 2020-06-01 09:42, 2020-06-01 09:44</span><br><span class="line">输出示例：66.66% </span><br><span class="line">计算过程示例：</span><br><span class="line">（2020-06-01 09:42）userServie被调成功率: 4/6= 66.66%</span><br><span class="line">（2020-06-01 09:43）userServie无调用</span><br><span class="line">（2020-06-01 09:44）userServie无调用</span><br><span class="line"> 那么userServie在2020-06-01 09:42到2020-06-01 09:44的平均成功率为（66.66%）/ 1 = 66.66%【示例数据仅仅在2020-06-01 09:42有调用】</span><br></pre></td></tr></table></figure>
+
+<p>如果计算结果是0，请表示成 <strong>.00%</strong></p>
+<h2 id="评测环境-amp-启动参数"><a href="#评测环境-amp-启动参数" class="headerlink" title="评测环境&amp;启动参数"></a>评测环境&amp;启动参数</h2><ul>
+<li>JDK 版本： 1.8</li>
+<li>jvm内存设置 : -XX:+UseG1GC -XX:MaxGCPauseMillis=500 -Xss256k -Xms6G -Xmx6G -XX:MaxDirectMemorySize=1G</li>
+<li>评测机器硬件信息（docker）：<ul>
+<li>操作系统 CentOS 7.3 64位</li>
+<li>CPU 8核 3.00GHz</li>
+<li>硬盘：容量 100GB， 吞吐量 &gt; 100MB/S</li>
+</ul>
+</li>
+<li>如果需要输出文件，请使用 /tmp/ 目录，<strong>禁止使用其他目录</strong></li>
+</ul>
+<p>题目内容就这么些，题目是很容易读懂的，简单的来说就是读入解析一个12G的具有一定格式的日志文件，然后建立一定的便于查询的数据结构，进行两种方式的查询。主要的得分点</p>
+<ul>
+<li>第一阶段快速读入解析文件</li>
+<li>二三阶段查询的时间复杂度尽可能小</li>
+</ul>
+<h2 id="爬分过程"><a href="#爬分过程" class="headerlink" title="爬分过程"></a>爬分过程</h2><h3 id="600分baseline"><a href="#600分baseline" class="headerlink" title="600分baseline"></a>600分baseline</h3><p><img src="https://pic-serve.oss-cn-beijing.aliyuncs.com/blog/image-20200702203840861.png" alt=""></p>
+<p>600分的baseline大概花了一天不到就写完了，其实本来是一个晚上左右就写完了的，但是由于各种综合原因踩到了一个比较低级的坑，所以在线上无日志的情况下找了将近一天的BUG。</p>
+<p>baseline的做法非常暴力</p>
+<p>1.第一阶段。首先我的第一阶段的目标是就是在单线程环境下加速IO速度，根据我以往的优化方案，第一想法就是使用块读写。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">RandomAccessFile memoryMappedFile = <span class="keyword">new</span> RandomAccessFile(path, <span class="string">"r"</span>);</span><br><span class="line">FileChannel channel = memoryMappedFile.getChannel();</span><br><span class="line"><span class="comment">// try to use 16KB buffer</span></span><br><span class="line">ByteBuffer byteBuffer = ByteBuffer.allocateDirect(<span class="number">1024</span> * <span class="number">64</span>);</span><br><span class="line"><span class="keyword">int</span> size = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> (channel.read(byteBuffer) != -<span class="number">1</span>) &#123;</span><br><span class="line">byteBuffer.flip();</span><br><span class="line">    <span class="keyword">int</span> remain = byteBuffer.remaining();</span><br><span class="line">    <span class="keyword">byte</span>[] bts = <span class="keyword">new</span> <span class="keyword">byte</span>[remain];</span><br><span class="line">    byteBuffer.get(bts, <span class="number">0</span>, remain);</span><br><span class="line">    byteBuffer.clear();</span><br><span class="line">    processBlock(bts);</span><br><span class="line">    size += <span class="number">64</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里也是我踩到的第一个坑，由于平时都没有注意文件的权限管理，我的baseline在线上死活通不过的原因就是因为顺手写了 w 权限，</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">RandomAccessFile memoryMappedFile = <span class="keyword">new</span> RandomAccessFile(path, <span class="string">"rw"</span>);</span><br></pre></td></tr></table></figure>
+
+<p>但是很显然赛题方是不会给我们写权限的，所以这里线上就一直报错，由于线上的日志只会打印Exception中的信息，但是这里在线上报的Security Exception又被catch了，导致没有一点点错误痕迹。只能通过肉眼在全局代码中一行行找可疑代码。这里花了我将近一天的时间。</p>
+<p>但是其实对于块读来说，对于需要按行解析的数据是非常不友好的，由于每行的长度并不是固定的，所以不管一次块读的大小是多少，总会有块的末尾的数据不是完整的，需要和下一个块的开头的不完整部分的数据做拼接。并且也是需要遍历所有的字节，找到所有的  <code>\n</code> 换行符来构建行，从而解析行，同时解析行同样是需要花费时间的。</p>
+<p>实测在单线程环境下，如果处理行数据不是那么快，使用块读的效率和使用 <code>bufferedReader.readLine()</code> 的速度基本上也差不了多少， 因为这个时候瓶颈就不是调用IO，而是CPU解析的时间了。</p>
+<p>2.第二阶段、查询 1，第二阶段稍微麻烦点的是p99的计算，我建立了如下的数据结构来做为baseline的方案。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;caller+responder, Map&lt;timestamp, Map&lt;callerIp+responderIp, Span&gt;&gt;</span><br><span class="line"></span><br><span class="line">Span:</span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Span</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sucTime;</span><br><span class="line">    <span class="keyword">int</span> totalTime;</span><br><span class="line">    List&lt;Integer&gt; list;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Span</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        sucTime = <span class="number">0</span>;</span><br><span class="line">        totalTime = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于需要计算p99，最简单的做法当然是把所有数据都存起来，然后需要p99时，将所有数据排序，然后取 len * 0.99 位置的数值即可。这里的时间复杂度由于需要查询p99时需要排序，并且需要遍历 <code>Map&lt;callerIp+responderIp, Span&gt;</code> 来构造List，所以时间复杂度为 <code>O(n^2logn)</code></p>
+<p>3.第三阶段、查询 2，第三阶段比较简单，建立的存储数据结构如下</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Map&lt;responder, Map&lt;timestamp, Span&gt;&gt;</span><br></pre></td></tr></table></figure>
+
+<p>由于第三阶段是一个时间区间，所以查询的时候，只需要遍历需要收集的时间区间然后计算成功率即可。时间复杂度为 <code>O(n)</code>，</p>
+<p>这样的一个快速方案原型，在我本地跑出的耗时如下，其中第二阶段查询次数为1w，第三界阶段查询次数为100w</p>
+<p><img src="https://pic-serve.oss-cn-beijing.aliyuncs.com/blog/image-20200702212127887.png" alt=""></p>
+<h3 id="3600分"><a href="#3600分" class="headerlink" title="3600分"></a>3600分</h3><p><img src="https://pic-serve.oss-cn-beijing.aliyuncs.com/blog/image-20200702221645278.png" alt=""></p>
+<p>写出baseline之后，首先优化的是第一阶段，由于线上的机器配置非常好，8核CPU，所以肯定需要尽量释放机器性能。当前的想法有两个</p>
+<ol>
+<li>多线程读文件，多线程处理数据</li>
+<li>单线程读文件，多线程处理数据</li>
+</ol>
+<p>但是在使用块读的情况下，要是使用多线程块读 读文件，同步策略会变得异常复杂，编码难度也大大增加，在短暂的尝试后，我选择了单线程读文件，多线程处理数据的方案。</p>
+<p>但是当我把每一行作为一个任务提交到 8 线程线程池中进行处理解析是，运行时发现，运行时间却大大增加，统计了每行平均处理时间后，发现每行的处理时间大概在 200-2000ns，然而根据网上搜到的资料，线程切换导致的上下文切换开销也基本是这个量级，所以虽然使用了线程池，但是还是导致了大量的线程切换。对此我的<a href="https://github.com/ayang818/KCoder-First/blob/master/src/main/java/com/kuaishou/kcode/KcodeRpcMonitorImpl.java#L75">解决方案</a>就是先收集 n 行数据，然后再一起提交到线程池中处理。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">index++;</span><br><span class="line"><span class="keyword">while</span> (readline()) &#123;</span><br><span class="line">    ...</span><br><span class="line">    index++;</span><br><span class="line">    <span class="keyword">if</span> (index &gt;= threshold) &#123;</span><br><span class="line">        <span class="keyword">final</span> String[] tmp = list;</span><br><span class="line">        threadPool.execute(() -&gt; handleLines(tmp));</span><br><span class="line">        list = <span class="keyword">new</span> String[threshold];</span><br><span class="line">        index = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>到这里我的本地prepare耗时降到了（由于速度基本没有什么差距，所以我干脆把块读换成了代码更简洁的 <code>BufferReader.readLine()</code>）</p>
+<p><img src="https://pic-serve.oss-cn-beijing.aliyuncs.com/blog/image-20200702214034791.png" alt=""></p>
+<p>一阶段的优化到这里基本就结束了，线上的一阶段耗时大致在 20s 左右。</p>
+<p>接下来是第二阶段的优化，最需要优化的肯定是 p99 的计算，其实简单思考一下就可以想出 p99 的内存和时间上的最佳方案—— <strong>桶排序</strong>，由于 p99 统计的是调用时间，而调用时间一般都集中在 0 - 350 这个区间中，所以这里的代码就很简单了，只需要让调用时间对应下标的bucket的值+1即可。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 解析</span></span><br><span class="line"><span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">	bucket[costTime] += <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算p99</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getP99</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> pos = (<span class="keyword">int</span>) (totalTime.get() * <span class="number">0.01</span>) + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">int</span> len = bucket.length;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">		pos -= bucket[i];</span><br><span class="line">		<span class="keyword">if</span> (pos &lt;= <span class="number">0</span>) <span class="keyword">return</span> i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以获取p99的复杂度从 <code>O(nlogn)</code>降到了 <code>O(1)</code>，阶段二的总体复杂度也降到了 <code>O(n)</code></p>
+<p>本地耗时，二阶段10w次，三阶段10w次</p>
+<p><img src="https://pic-serve.oss-cn-beijing.aliyuncs.com/blog/image-20200702215752247.png" alt=""></p>
+<h3 id="5000分"><a href="#5000分" class="headerlink" title="5000分"></a>5000分</h3><p><img src="https://pic-serve.oss-cn-beijing.aliyuncs.com/blog/image-20200702221743598.png" alt=""></p>
+<p>小的优化：</p>
+<ol>
+<li><p>重写了自定义的DateFormatter。</p>
+</li>
+<li><p>重写了截取两位小数的DecimalFormatter。</p>
+</li>
+<li><p>优化查询2数据结构 <code>Map&lt;responder, Map&lt;timestamp, Span&gt;&gt;</code> 变成  <code>Map&lt;responder, Span[]&gt;</code>，虽然这两个数组和map的复杂度都是 <code>O(1)</code>，但是map在get时还是会需要进行hash运算，而数组则是直接通过偏移量取值。</p>
+</li>
+</ol>
+<p>（本来到了5000分就不想继续优化代码了，毕竟考试太多了，但是 kcode 的 QQ 群里突然有人发了个6000分的demo，瞬间自闭。但是本着比赛期间不太想看别人的代码的意思，于是还是决定继续对着自己的代码琢磨，（考试，危！</p>
+<h3 id="9400分"><a href="#9400分" class="headerlink" title="9400分"></a>9400分</h3><p><img src="https://pic-serve.oss-cn-beijing.aliyuncs.com/blog/image-20200702221759478.png" alt=""></p>
+<p>这里算是分数进步最大的一次优化了，虽然感觉代码上并不是很难。。。</p>
+<p>对于阶段二，其实当前的时间复杂度为<code>O(n)</code>，因为需要在查询时遍历一组服务队下所有的 IP 对，但是我想了一下之后，发现其实只要在阶段一结束后，遍历收集好的整个 Map，首先将这些 IP 对中的数据直接收集到一个 List 中即可。这样查询时就可以根据服务名+时间戳直接找到对应的 List 了</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">checkOneMap.forEach((key, timestampMap) -&gt; &#123;</span><br><span class="line">    <span class="comment">// 遍历所有时间戳</span></span><br><span class="line">    timestampMap.forEach((k, ipPairMap) -&gt; &#123;</span><br><span class="line">        String[] split = key.split(<span class="string">","</span>);</span><br><span class="line">        String resKey = split[<span class="number">0</span>] + split[<span class="number">1</span>] + k;</span><br><span class="line">        List&lt;String&gt; resList = <span class="keyword">new</span> ArrayList&lt;&gt;(<span class="number">20</span>);</span><br><span class="line">        ipPairMap.forEach((ipPair, span) -&gt; resList.add(span.getRes()));</span><br><span class="line">        checkOneResMap.put(resKey, resList);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>对于阶段三，由于需要遍历区间中所有的分钟，才可以得到区间整体的成功率，所以这里就是一个非常烦的地方，虽然可以预先生成可能的所有区间的值，但是这种做法对于实际工程来说过于离谱。所以几经斟酌后还是没有这样做。</p>
+<p>最后感觉可能只能构建缓存来让一部分 <code>O(n)</code> 操作变成 <code>O(1)</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">checkResponder</span><span class="params">(String responder, String start, String end)</span> </span>&#123;</span><br><span class="line">    String hash = responder + start + end;</span><br><span class="line">    String res;</span><br><span class="line">    <span class="keyword">if</span> ((res = checkTwoResMap.get(hash)) == <span class="keyword">null</span>) &#123;</span><br><span class="line">        Span[] timestampMap = checkTwoMap.get(responder);</span><br><span class="line">        <span class="keyword">if</span> (timestampMap == <span class="keyword">null</span>) &#123;</span><br><span class="line">            checkTwoResMap.put(hash, <span class="string">"-1.00%"</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"-1.00%"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> startMil = parseDate(start);</span><br><span class="line">        <span class="keyword">long</span> endMil = parseDate(end);</span><br><span class="line">        <span class="keyword">double</span> times = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">double</span> sum = <span class="number">0</span>;</span><br><span class="line">        Span span;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">long</span> i = startMil; i &lt;= endMil; i += <span class="number">60000</span>) &#123;</span><br><span class="line">            span = timestampMap[minuteHash(i)] ;</span><br><span class="line">            <span class="keyword">if</span> (span != <span class="keyword">null</span> &amp;&amp; span.sucRate != <span class="number">0</span>) &#123;</span><br><span class="line">                sum += (span.getSucRate() * <span class="number">100</span>);</span><br><span class="line">                times++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (sum == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (times == <span class="number">0</span>) &#123;</span><br><span class="line">                checkTwoResMap.put(hash, <span class="string">"-1.00%"</span>);</span><br><span class="line">                <span class="keyword">return</span> <span class="string">"-1.00%"</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            checkTwoResMap.put(hash, <span class="string">".00%"</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="string">".00%"</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        String value = formatDouble(sum / times) + <span class="string">"%"</span>;</span><br><span class="line">        checkTwoResMap.put(hash, value);</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是运气比较好，这一次构建缓存的尝试让我的分数高了不少，到达了接近1w的分数，但是进复赛还是没有很稳，所以顶着两天连续考试的压力，又继续尝试优化。</p>
+<h3 id="11000分"><a href="#11000分" class="headerlink" title="11000分"></a>11000分</h3><p>这里其实没有做什么优化，单纯的把线程池的大小从 8 调到了 16，但是分数提升还挺多。</p>
+<h3 id="13600分"><a href="#13600分" class="headerlink" title="13600分"></a>13600分</h3><p><img src="https://pic-serve.oss-cn-beijing.aliyuncs.com/blog/image-20200702222500471.png" alt=""></p>
+<p>到了11000后其实感觉还不是很稳，但是实在想不到以当前的代码还有什么可以优化的，但是感觉进复赛还不是很稳。由于当前二三阶段的查询都已经优化到了 <code>O(1)</code> ，所以感觉可以优化的只有常数。观察原来的代码，可能比较耗时的操作应该就是</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String hash = responder + start + end;</span><br></pre></td></tr></table></figure>
+
+<p>和</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String resKey = caller + responder + parseDate(time);</span><br></pre></td></tr></table></figure>
+
+<p>所以最后在分数的诱惑下还是选择了写一个自定义hash函数取代拼接字符串，但是实际工程中是不可能这么做的，只能寄希望于线上不要有hash冲突。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">public</span> Integer <span class="title">hash</span><span class="params">(Object a, Object b, Object c)</span> </span>&#123;</span><br><span class="line">        Integer res = <span class="number">1</span>;</span><br><span class="line">        res = <span class="number">1313</span> * res + a.hashCode();</span><br><span class="line">        res = <span class="number">1313</span> * res + b.hashCode();</span><br><span class="line">        res = <span class="number">1313</span> * res + c.hashCode();</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 查询1</span></span><br><span class="line">Integer resKey = hash(caller, responder, parseDate(time));</span><br><span class="line"><span class="comment">// 查询2</span></span><br><span class="line">Integer hash = hash(responder, start, end);</span><br></pre></td></tr></table></figure>
+
+<p>最后拿到了13600这个差不多稳进复赛的成绩，心累。</p>
+<h2 id="技术外的一些想法"><a href="#技术外的一些想法" class="headerlink" title="技术外的一些想法"></a>技术外的一些想法</h2><p>2020的上半年，这个大二下学期的尾巴可以说过的非常忙碌了，六月参加了两个比赛，天池的中间件大赛、快手的kcode程序设计大赛、然后还有一大堆赶不完的大作业、期末考的复习…，不过还算都完成的还能接受，运气好一点两个都进复赛，参加这两个比赛对我也有很大的锻炼（至少比写CRUD要开心多了）。</p>
+<p>想一想放完暑假就是大三，大三上学期过完就要去找暑期实习了，这么想想感觉大学剩下来的时间也不算很多了。然而感觉大学还是有好多事情没有做过啊，没去过一直想去的日本，没谈过恋爱，连之前一直非常喜欢的羽毛球也没有继续打下去…… ，一大堆没有干过的事情让我有种到底是我太忙了还是我不想去做的错觉。下学期社团和工作室的和辅导员对接好的一堆赛事和活动我也得去组织和安排，郁闷。如果自私一点想的话，这些东西不去做也不会有啥问题吧，无非就是科协还是没有生气的老样子、工作室人也越来越少。但是这些地方都让我收获了很多东西，虽然他们变得越来越差也不会对我以后有任何影响，但总还是有一些不甘心，想尝试去挽救一下，希望人没事~</p>
+<p>写了快一个晚上了，还是希望下半年也能一切顺利吧，感觉会有好事发生。</p>
+
+        </div>
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/性能挑战赛/">性能挑战赛</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://computernetworking.oss-cn-hongkong.aliyuncs.com/temppic/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/mit6-824/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">mit6.824</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/android-jetpack-architecture/">
+                <span class="level-item">使用Jetpack的Architecture工具降低Android开发中的耦合度</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '2df080a3f11a34fc4f0d',
+        clientSecret: '3c6fefb8587a575f94ca5a00cdf6ad9e41ad0c0c',
+        id: '751128e2279a75db175c9df6ad96bb00',
+        repo: 'comment-repo',
+        owner: 'ayang818',
+        admin: "ayang818",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818 (杨丰畅)">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Ayang818 (杨丰畅)
+                    </p>
+                    
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国，杭州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            57
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            0
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            38
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ayang818" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Github" href="https://github.com/ayang818">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/syh0313" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">syh0313</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://wzyxv1n.top/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">wenzhuan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">wzyxv1n.top</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/weixin_43434223" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">旧博客</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/DevOps/" style="font-size: 12px;">DevOps</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Kugga/" style="font-size: 10px;">Kugga</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/big-data/" style="font-size: 10px;">big-data</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/jetpack/" style="font-size: 10px;">jetpack</a> <a href="/tags/js/" style="font-size: 12px;">js</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/分布式理论/" style="font-size: 14px;">分布式理论</a> <a href="/tags/前后端分离/" style="font-size: 14px;">前后端分离</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 18px;">并发编程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/性能挑战赛/" style="font-size: 10px;">性能挑战赛</a> <a href="/tags/日常技能/" style="font-size: 10px;">日常技能</a> <a href="/tags/源码/" style="font-size: 10px;">源码</a> <a href="/tags/灵感/" style="font-size: 10px;">灵感</a> <a href="/tags/算法/" style="font-size: 12px;">算法</a> <a href="/tags/老代码/" style="font-size: 10px;">老代码</a> <a href="/tags/自嗨/" style="font-size: 10px;">自嗨</a> <a href="/tags/自我提升/" style="font-size: 10px;">自我提升</a> <a href="/tags/设计模式/" style="font-size: 18px;">设计模式</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/部门教程/" style="font-size: 12px;">部门教程</a> <a href="/tags/阶段总结/" style="font-size: 10px;">阶段总结</a> <a href="/tags/随笔/" style="font-size: 16px;">随笔</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow  ">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:15:46.000Z">2021-09-13</time></div>
+                    <a href="/系统复杂度到底是什么/" class="title has-link-black-ter is-size-6 has-text-weight-normal">系统复杂度到底是什么</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:11:06.000Z">2021-09-13</time></div>
+                    <a href="/SOME-TIPS/" class="title has-link-black-ter is-size-6 has-text-weight-normal"># SOME TIPS #</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-19T05:28:30.000Z">2021-04-19</time></div>
+                    <a href="/python-decorator/" class="title has-link-black-ter is-size-6 has-text-weight-normal">python 装饰器从走路到跑路（误</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-06T06:24:00.000Z">2021-03-06</time></div>
+                    <a href="/hive-sql/" class="title has-link-black-ter is-size-6 has-text-weight-normal">hive sql 调优</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-02-22T06:52:05.000Z">2021-02-22</time></div>
+                    <a href="/micro-service-explore/" class="title has-link-black-ter is-size-6 has-text-weight-normal">微服务技术调研</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="快手kcode程序设计大赛初赛总结" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 ayang818&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://blog.ayang818.top',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+<script src="/node_modules/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/node_modules/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>

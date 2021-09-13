@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html  lang="zh">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>javascript中的浏览器操作 - Ayang818&#39;s blog</title>
+
+
+    <meta name="description" content="学习JavaScript的初衷其实我是一个后端选手，但是缺了前端，后端性能再怎么好，总是无法具象化体现。而工作室里现在差不多感觉只有我一个在做Web开发，所以也不得不成为一位前后端全干代码狗啦😁。 浏览器对象1.windowwindow对象不但充当全部作用域，而且表示浏览器窗口。window对象有innerHeight对象和innerHeight，可以获取浏览器的内部宽度和高度">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript中的浏览器操作">
+<meta property="og:url" content="https://blog.ayang818.top/javascript的浏览器对象/index.html">
+<meta property="og:site_name" content="Ayang818&#39;s blog">
+<meta property="og:description" content="学习JavaScript的初衷其实我是一个后端选手，但是缺了前端，后端性能再怎么好，总是无法具象化体现。而工作室里现在差不多感觉只有我一个在做Web开发，所以也不得不成为一位前后端全干代码狗啦😁。 浏览器对象1.windowwindow对象不但充当全部作用域，而且表示浏览器窗口。window对象有innerHeight对象和innerHeight，可以获取浏览器的内部宽度和高度">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blog.ayang818.top/images/og_image.png">
+<meta property="og:updated_time" content="2021-07-12T15:02:56.637Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript中的浏览器操作">
+<meta name="twitter:description" content="学习JavaScript的初衷其实我是一个后端选手，但是缺了前端，后端性能再怎么好，总是无法具象化体现。而工作室里现在差不多感觉只有我一个在做Web开发，所以也不得不成为一位前后端全干代码狗啦😁。 浏览器对象1.windowwindow对象不但充当全部作用域，而且表示浏览器窗口。window对象有innerHeight对象和innerHeight，可以获取浏览器的内部宽度和高度">
+<meta name="twitter:image" content="https://blog.ayang818.top/images/og_image.png">
+
+
+
+
+
+
+
+<link rel="icon" href="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/androidstudio.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/css/back-to-top.css">
+
+    
+    
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/">
+            
+                <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="javascript中的浏览器操作" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/">主页</a>
+                
+                <a class="navbar-item"
+                href="/archives">归档</a>
+                
+                <a class="navbar-item"
+                href="/tags">分类</a>
+                
+                <a class="navbar-item"
+                href="/about">关于</a>
+                
+                <a class="navbar-item"
+                href="https://github.com/ayang818">Github</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" rel="noopener" title="Github" href="https://github.com/ayang818">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="搜索" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-9-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-07-07T15:08:23.000Z">2019-07-07</time>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    20 minutes 读完 (大约 2979 个字)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                javascript中的浏览器操作
+            
+        </h1>
+        <div class="content">
+            <h2 id="学习JavaScript的初衷"><a href="#学习JavaScript的初衷" class="headerlink" title="学习JavaScript的初衷"></a>学习JavaScript的初衷</h2><p>其实我是一个后端选手，但是缺了前端，后端性能再怎么好，总是无法具象化体现。而工作室里现在差不多感觉只有我一个在做Web开发，所以也不得不成为一位前后端全干代码狗啦😁。</p>
+<h1 id="浏览器对象"><a href="#浏览器对象" class="headerlink" title="浏览器对象"></a>浏览器对象</h1><h2 id="1-window"><a href="#1-window" class="headerlink" title="1.window"></a>1.window</h2><p>window对象不但充当全部作用域，而且表示浏览器窗口。<br>window对象有innerHeight对象和innerHeight，可以获取浏览器的内部宽度和高度</p>
+<a id="more"></a>   
+
+<h2 id="2-navigator"><a href="#2-navigator" class="headerlink" title="2.navigator"></a>2.navigator</h2><p>navigator对象对象表示浏览器的信息，最常用的属性包括</p>
+<ul>
+<li><p>navigator.appName 浏览器名称</p>
+</li>
+<li><p>navigator.appVersion 浏览器版本</p>
+</li>
+<li><p>navigator.language 浏览器语言</p>
+</li>
+<li><p>navigator.platform 浏览器系统类型</p>
+</li>
+<li><p>navigator.userAgent 浏览器设置的User-Agent字串</p>
+</li>
+</ul>
+<p>下面代码是使用短路运算符得到网页宽度的方法</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> width = <span class="built_in">window</span>.innerWidth || <span class="built_in">document</span>.body.clientWidth;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-screen"><a href="#3-screen" class="headerlink" title="3.screen"></a>3.screen</h2><p>screen对象表示屏幕的信息，常用的属性有</p>
+<ul>
+<li><p>screen.width 屏幕宽度</p>
+</li>
+<li><p>screen.height 屏幕高度，px为单位</p>
+</li>
+<li><p>screen.colorDepth 返回颜色位数</p>
+</li>
+</ul>
+<h2 id="4-location"><a href="#4-location" class="headerlink" title="4.location"></a>4.location</h2><ul>
+<li><p>location对象表示当前页面的URl信息</p>
+</li>
+<li><p>location.href 获取当前url</p>
+</li>
+<li><p>location.protocol</p>
+</li>
+<li><p>location.host</p>
+</li>
+<li><p>location.port</p>
+</li>
+<li><p>location.pathname</p>
+</li>
+<li><p>location.search</p>
+</li>
+<li><p>location.hash</p>
+</li>
+<li><p>location.reload()  刷新页面</p>
+</li>
+<li><p>location.assign(“url”) 重定向到一个网页</p>
+</li>
+</ul>
+<h2 id="5-docement"><a href="#5-docement" class="headerlink" title="5.docement"></a>5.docement</h2><p>document对象表示当前页面。由于HTML在浏览器中以DOM形式表示为树形结构，document对象就是整个DOM树的根节点。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 修改标题</span></span><br><span class="line"><span class="built_in">document</span>.title = <span class="string">'快回来嗷!'</span>;</span><br></pre></td></tr></table></figure>
+
+<p>常用方法</p>
+<ul>
+<li><p>document.getElementById()</p>
+</li>
+<li><p>document.getElementByTagName()</p>
+</li>
+<li><p>document.cookie 获取当前页面的cookie</p>
+</li>
+</ul>
+<p>为了解决这个问题cookie信息泄露问题，服务器在设置Cookie时可以使用httpOnly，设定了httpOnly的Cookie将不能被JavaScript读取。这个行为由浏览器实现，主流浏览器均支持httpOnly选项，IE从IE6 SP1开始支持。<br>为了确保安全，服务器端在设置Cookie时，应该始终坚持使用httpOnly。</p>
+<h1 id="操作DOM"><a href="#操作DOM" class="headerlink" title="操作DOM"></a>操作DOM</h1><h2 id="1-更新DOM"><a href="#1-更新DOM" class="headerlink" title="1.更新DOM"></a>1.更新DOM</h2><ul>
+<li><p>直接修改innerHTML的属性</p>
+</li>
+<li><p>修改innerText或textContent属性，不会修改DOM树结构</p>
+</li>
+</ul>
+<h2 id="2-插入DOM"><a href="#2-插入DOM" class="headerlink" title="2.插入DOM"></a>2.插入DOM</h2><ul>
+<li><p>如果这个DOM节点是空的，例如，&lt;div&gt;</div>，那么，直接使用innerHTML = &lt;span&gt;child</span>‘就可以修改DOM节点的内容，相当于“插入”了新的DOM节点。</p>
+</li>
+<li><p>如果这个DOM节点不是空的，那就不能这么做，因为innerHTML会直接替换掉原来的所有子节点。</p>
+</li>
+<li><p>使用appendChild，把一个子节点添加到父节点的最后一个子节点。</p>
+</li>
+</ul>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">&lt;p id="js"&gt;JavaScript&lt;/p&gt;</span><br><span class="line">&lt;div id=<span class="string">"list"</span>&gt;</span><br><span class="line">&lt;p id="java"&gt;Java&lt;/p&gt;</span><br><span class="line">&lt;p id="python"&gt;Python&lt;/p&gt;</span><br><span class="line">&lt;p id="scheme"&gt;Scheme&lt;/p&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用如下js代码</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> js = <span class="built_in">document</span>.getElementById(<span class="string">"js"</span>);</span><br><span class="line"><span class="keyword">var</span> list = <span class="built_in">document</span>.getElementById(<span class="string">"list"</span>);</span><br><span class="line">list.appendChild(js);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>创建一个节点并append<br><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> list = <span class="built_in">document</span>.getElementById(<span class="string">"list"</span>);</span><br><span class="line"><span class="keyword">var</span> node = <span class="built_in">document</span>.createElement(<span class="string">"p"</span>);</span><br><span class="line">node.innerText = <span class="string">"Scala"</span>;</span><br><span class="line">node.id = <span class="string">"scala"</span>;</span><br><span class="line">list.appendChild(node);</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>下面代码实现了创建一个style节点，并把它添加到<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">```js</span><br><span class="line">var d = document.createElement(&apos;style&apos;);</span><br><span class="line">d.setAttribute(&apos;type&apos;, &apos;text/css&apos;);</span><br><span class="line">d.innerHTML = &apos;p &#123; color: red &#125;&apos;;</span><br><span class="line">document.getElementsByTagName(&apos;head&apos;)[0].appendChild(d);</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>插入到指定位置</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> py = <span class="built_in">document</span>.getElementById(<span class="string">"python"</span>);</span><br><span class="line"><span class="keyword">var</span> list = <span class="built_in">document</span>.getElementById(<span class="string">"list"</span>);</span><br><span class="line"><span class="keyword">var</span> scala = <span class="built_in">document</span>.createElement(<span class="string">"p"</span>);</span><br><span class="line">scala.id = <span class="string">"scala"</span>;</span><br><span class="line">scala.innerHtml = <span class="string">"Scala"</span>;</span><br><span class="line">list.insertBefore(scala, py);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Demo<br><br>对于一个已有的HTML结构</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- HTML结构 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">ol</span> <span class="attr">id</span>=<span class="string">"test-list"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"lang"</span>&gt;</span>Scheme<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"lang"</span>&gt;</span>JavaScript<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"lang"</span>&gt;</span>Python<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"lang"</span>&gt;</span>Ruby<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">"lang"</span>&gt;</span>Haskell<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>需要将其中的li按照顺序排好<br>代码如下</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> ol = <span class="built_in">document</span>.getElementById(<span class="string">"test-list"</span>);</span><br><span class="line"><span class="keyword">var</span> list = ol.getElementsByTagName(<span class="string">"li"</span>);</span><br><span class="line"><span class="keyword">var</span> node_list = [];</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> list)&#123;</span><br><span class="line">    node_list.push(item.innerText);</span><br><span class="line">&#125;</span><br><span class="line">node_list.sort();</span><br><span class="line">index = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> list)&#123;</span><br><span class="line">    item.innerText = node_list[index];  </span><br><span class="line">    index++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-删除DOM"><a href="#3-删除DOM" class="headerlink" title="3.删除DOM"></a>3.删除DOM</h2><ul>
+<li>删除一个DOM节点就比插入要容易得多。<br>要删除一个节点，首先要获得该节点本身以及它的父节点，然后，调用父节点的removeChild把自己删掉。<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 拿到待删除节点:</span></span><br><span class="line"><span class="keyword">var</span> self = <span class="built_in">document</span>.getElementById(<span class="string">'to-be-removed'</span>);</span><br><span class="line"><span class="comment">// 拿到父节点:</span></span><br><span class="line"><span class="keyword">var</span> parent = self.parentElement;</span><br><span class="line"><span class="comment">// 删除:</span></span><br><span class="line"><span class="keyword">var</span> removed = parent.removeChild(self);</span><br><span class="line">removed === self; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h1 id="操作表单"><a href="#操作表单" class="headerlink" title="操作表单"></a>操作表单</h1><ul>
+<li><p>文本框，对应的&lt;input type=”text”&gt;，用于输入文本；</p>
+</li>
+<li><p>口令框，对应的&lt;input type=”password”&gt;，用于输入口令；</p>
+</li>
+<li><p>单选框，对应的&lt;input type=”radio”&gt;，用于选择一项；</p>
+</li>
+<li><p>复选框，对应的&lt;input type=”checkbox”&gt;，用于选择多项；</p>
+</li>
+<li><p>下拉框，对应的&lt;select&gt;，用于选择一项；</p>
+</li>
+<li><p>隐藏文本，对应的&lt;input type=”hidden”&gt;，用户不可见，但表单提交时会把隐藏文本发送到服务器。</p>
+</li>
+</ul>
+<h2 id="1-获取值"><a href="#1-获取值" class="headerlink" title="1.获取值"></a>1.获取值</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &lt;input type="text" id="email"&gt;</span></span><br><span class="line"><span class="keyword">var</span> input = <span class="built_in">document</span>.getElementById(<span class="string">'email'</span>);</span><br><span class="line">input.value; <span class="comment">// '用户输入的值'</span></span><br></pre></td></tr></table></figure>
+
+<p>这种方式可以应用于text、password、hidden以及select。<br><br>对于radio， checkbox来说，value返回的永远是实现设定好的值，所以需要使用</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &lt;label&gt;&lt;input type="radio" name="weekday" id="monday" value="1"&gt; Monday&lt;/label&gt;</span></span><br><span class="line"><span class="comment">// &lt;label&gt;&lt;input type="radio" name="weekday" id="tuesday" value="2"&gt; Tuesday&lt;/label&gt;</span></span><br><span class="line"><span class="keyword">var</span> mon = <span class="built_in">document</span>.getElementById(<span class="string">"monday"</span>);</span><br><span class="line"><span class="keyword">var</span> tues = <span class="built_in">document</span>.getElementById(<span class="string">"tuesday"</span>);</span><br><span class="line">mon.checked <span class="comment">// true or flase</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="2-设置值"><a href="#2-设置值" class="headerlink" title="2.设置值"></a>2.设置值<br></h2><p>这个和获取值类似</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">    <span class="comment">// &lt;input type="text" id="email"&gt;</span></span><br><span class="line"><span class="keyword">var</span> input = <span class="built_in">document</span>.getElementById(<span class="string">'email'</span>);</span><br><span class="line">input.value = <span class="string">"ayang818@qq.com"</span>; <span class="comment">// '用户输入的值'</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="提交表单"><a href="#提交表单" class="headerlink" title="提交表单"></a>提交表单</h1><h2 id="1-通过-lt-form-gt-元素的submit-方法提交一个表单，例如，响应一个-lt-button-gt-的click事件，在JavaScript代码中提交表单"><a href="#1-通过-lt-form-gt-元素的submit-方法提交一个表单，例如，响应一个-lt-button-gt-的click事件，在JavaScript代码中提交表单" class="headerlink" title="1.通过&lt;form&gt;元素的submit()方法提交一个表单，例如，响应一个&lt;button&gt;的click事件，在JavaScript代码中提交表单"></a>1.通过&lt;form&gt;元素的submit()方法提交一个表单，例如，响应一个&lt;button&gt;的click事件，在JavaScript代码中提交表单</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;form id=<span class="string">"test-form"</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">"text"</span> name=<span class="string">"test"</span>&gt;</span><br><span class="line">    &lt;button type=<span class="string">"button"</span> onclick=<span class="string">"doSubmitForm()"</span>&gt;Submit&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>form&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">doSubmitForm</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> form = <span class="built_in">document</span>.getElementById(<span class="string">'test-form'</span>);</span><br><span class="line">    <span class="comment">// 可以在此修改form的input...</span></span><br><span class="line">    <span class="comment">// 提交form:</span></span><br><span class="line">    form.submit();</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这种方式的缺点是扰乱了浏览器对form的正常提交。浏览器默认点击&lt;button type=”submit”&gt;时提交表单，或者用户在最后一个输入框按回车键。</p>
+<h2 id="2-因此，第二种方式是响应本身的onsubmit事件，在提交form时作修改："><a href="#2-因此，第二种方式是响应本身的onsubmit事件，在提交form时作修改：" class="headerlink" title="2.因此，第二种方式是响应本身的onsubmit事件，在提交form时作修改："></a>2.因此，第二种方式是响应<form>本身的onsubmit事件，在提交form时作修改：</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;form id=<span class="string">"test-form"</span> onsubmit=<span class="string">"return checkForm()"</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">"text"</span> name=<span class="string">"test"</span>&gt;</span><br><span class="line">    &lt;button type=<span class="string">"submit"</span>&gt;Submit&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>form&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkForm</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> form = <span class="built_in">document</span>.getElementById(<span class="string">'test-form'</span>);</span><br><span class="line">    <span class="comment">// 可以在此修改form的input...</span></span><br><span class="line">    <span class="comment">// 继续下一步:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意要return true来告诉浏览器继续提交，如果return false，浏览器将不会继续提交form，这种情况通常对应用户输入有误，提示用户错误信息后终止提交form。</p>
+<h2 id="3-使用-lt-input-type-”hidden”-gt-间接传输数据"><a href="#3-使用-lt-input-type-”hidden”-gt-间接传输数据" class="headerlink" title="3.使用&lt;input type=”hidden”&gt;间接传输数据"></a>3.使用&lt;input type=”hidden”&gt;间接传输数据</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;form id=<span class="string">"login-form"</span> method=<span class="string">"post"</span> onsubmit=<span class="string">"return checkForm()"</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">"text"</span> id=<span class="string">"username"</span> name=<span class="string">"username"</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">"password"</span> id=<span class="string">"input-password"</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">"hidden"</span> id=<span class="string">"md5-password"</span> name=<span class="string">"password"</span>&gt;</span><br><span class="line">    &lt;button type=<span class="string">"submit"</span>&gt;Submit&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>form&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkForm</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> input_pwd = <span class="built_in">document</span>.getElementById(<span class="string">'input-password'</span>);</span><br><span class="line">    <span class="keyword">var</span> md5_pwd = <span class="built_in">document</span>.getElementById(<span class="string">'md5-password'</span>);</span><br><span class="line">    <span class="comment">// 把用户输入的明文变为MD5:</span></span><br><span class="line">    md5_pwd.value = toMD5(input_pwd.value);</span><br><span class="line">    <span class="comment">// 继续下一步:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意到id为md5-password的&lt;input&gt;标记了name=”password”，而用户输入的id为input-password的&lt;input&gt;没有name属性。没有name属性的&lt;input&gt;的数据不会被提交。</p>
+<h1 id="操作文件"><a href="#操作文件" class="headerlink" title="操作文件"></a>操作文件</h1><h2 id="1-提交文件"><a href="#1-提交文件" class="headerlink" title="1.提交文件"></a>1.提交文件</h2><p>&lt;input type=”file”&gt;<br>注意：当一个表单包含&lt;input type=”file”&gt;时，表单的enctype必须指定为multipart/form-data，method必须指定为post，浏览器才能正确编码并以multipart/form-data格式发送表单的数据。</p>
+<p>出于安全考虑，浏览器只允许用户点击&lt;input type=”file”&gt;来选择本地文件，用JavaScript对<input type="file">的value赋值是没有任何效果的。当用户选择了上传某个文件后，JavaScript也无法获得该文件的真实路径。</p>
+<p>检查文件后缀名</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> file = <span class="built_in">document</span>.getElementById(<span class="string">"file-update"</span>);</span><br><span class="line"><span class="keyword">var</span> fileName = file.value;</span><br><span class="line"><span class="keyword">if</span> (!fileName || fileName.endWith(<span class="string">".jpg"</span>) || fileName.endWith(<span class="string">"png"</span>))&#123;</span><br><span class="line">    alert(<span class="string">"can only update picture"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-FileAPI"><a href="#2-FileAPI" class="headerlink" title="2.FileAPI"></a>2.FileAPI</h2><br>
+HTML5的File API提供了File和FileReader两个主要对象，可以获得文件信息并读取文件。
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span></span><br><span class="line">    fileInput = <span class="built_in">document</span>.getElementById(<span class="string">'test-image-file'</span>),</span><br><span class="line">    info = <span class="built_in">document</span>.getElementById(<span class="string">'test-file-info'</span>),</span><br><span class="line">    preview = <span class="built_in">document</span>.getElementById(<span class="string">'test-image-preview'</span>);</span><br><span class="line"><span class="comment">// 监听change事件:</span></span><br><span class="line">fileInput.addEventListener(<span class="string">'change'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 清除背景图片:</span></span><br><span class="line">    preview.style.backgroundImage = <span class="string">''</span>;</span><br><span class="line">    <span class="comment">// 检查文件是否选择:</span></span><br><span class="line">    <span class="keyword">if</span> (!fileInput.value) &#123;</span><br><span class="line">        info.innerHTML = <span class="string">'没有选择文件'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 获取File引用:</span></span><br><span class="line">    <span class="keyword">var</span> file = fileInput.files[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">// 获取File信息:</span></span><br><span class="line">    info.innerHTML = <span class="string">'文件: '</span> + file.name + <span class="string">'&lt;br&gt;'</span> +</span><br><span class="line">                    <span class="string">'大小: '</span> + file.size + <span class="string">'&lt;br&gt;'</span> +</span><br><span class="line">                    <span class="string">'修改: '</span> + file.lastModifiedDate;</span><br><span class="line">    <span class="keyword">if</span> (file.type !== <span class="string">'image/jpeg'</span> &amp;&amp; file.type !== <span class="string">'image/png'</span> &amp;&amp; file.type !== <span class="string">'image/gif'</span>) &#123;</span><br><span class="line">        alert(<span class="string">'不是有效的图片文件!'</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 读取文件:</span></span><br><span class="line">    <span class="keyword">var</span> reader = <span class="keyword">new</span> FileReader();</span><br><span class="line">    <span class="comment">// 回调函数</span></span><br><span class="line">    reader.onload = <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span></span><br><span class="line">            data = e.target.result; <span class="comment">// 'data:image/jpeg;base64,/9j/4AAQSk...(base64编码)...'            </span></span><br><span class="line">        preview.style.backgroundImage = <span class="string">'url('</span> + data + <span class="string">')'</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 以DataURL的形式读取文件:</span></span><br><span class="line">    reader.readAsDataURL(file);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-异步回调"><a href="#3-异步回调" class="headerlink" title="3.异步回调"></a>3.异步回调<br></h2><p>上面的代码还演示了JavaScript的一个重要的特性就是单线程执行模式。在JavaScript中，浏览器的JavaScript执行引擎在执行JavaScript代码时，总是以单线程模式执行，也就是说，任何时候，JavaScript代码都不可能同时有多于1个线程在执行。</p>
+<h1>AJAX(Asynchronous Javascript And XML)</h1>
+
+<h2 id="1-使用"><a href="#1-使用" class="headerlink" title="1.使用"></a>1.使用<br></h2><p>这里了解的已经比较多了，就不详细写了，AJAX是异步执行的所以需要设置回调函数，在现代浏览器上写AJAX主要依靠XMLHttpRequest对象<br><a name="ajax"></a></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> request = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line"></span><br><span class="line">request.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (request.readyState === <span class="number">4</span>) &#123; </span><br><span class="line">        <span class="keyword">if</span> (request.status === <span class="number">200</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> text = request.responseText;</span><br><span class="line">            <span class="built_in">console</span>.log(text);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">"failed"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// HTTP请求还在继续...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">request.open(<span class="string">"GET"</span>,<span class="string">"https://www.baidu.com"</span>);</span><br><span class="line">request.send();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"其实这是个异步请求"</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-安全限制"><a href="#2-安全限制" class="headerlink" title="2.安全限制"></a>2.安全限制<br></h2><p>上面的代码实际上若不是再百度的域名下访问，是会收到如下报错的</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Access to XMLHttpRequest at &apos;https://www.baidu.com/&apos; from origin &apos;https://www.liaoxuefeng.com&apos; has been blocked by CORS policy: No &apos;Access-Control-Allow-Origin&apos; header is present on the requested resource.</span><br></pre></td></tr></table></figure>
+
+<p>意思就是请求被浏览器的同源策略所拦截，如图<br><img src="https://www.liaoxuefeng.com/files/attachments/1027024093709472/l" alt=""><br>但是默认情况下，JavaScript在发送AJAX请求时，URL的域名必须和当前页面完全一致。完全一致的意思是，域名要相同（<a href="http://www.example.com和example.com不同），协议要相同（http和https不同），端口号要相同（默认是:80端口，它和:8080就不同）。有的浏览器口子松一点，允许端口不同，大多数浏览器都会严格遵守这个限制。">www.example.com和example.com不同），协议要相同（http和https不同），端口号要相同（默认是:80端口，它和:8080就不同）。有的浏览器口子松一点，允许端口不同，大多数浏览器都会严格遵守这个限制。</a><br><br>所以为了解决这个问题，我们引入一个叫做跨域请求的概念。<br>在日常使用中，比如我之前用nodejs写的<a href="https://github.com/ayang818/Backstage-Management">前后端分离应用</a><br>用的就是aros跨域方法，具体的可以参考<a href="https://www.w3.org/TR/cors/">aros文档</a>。</p>
+<h1 id="Promise"><a href="#Promise" class="headerlink" title="Promise"></a>Promise</h1><p>在JavaScript的世界中，所有代码都是单线程执行的。</p>
+<p>由于这个“缺陷”，导致JavaScript的所有网络操作，浏览器事件，都必须是异步执行。异步执行可以用回调函数实现</p>
+<p>参考上面的<a href="#ajax">代码</a>，AJAX就是个典型的异步操作，但是有没有比上面的代码更好用的代码呢？<br>可以写成这样</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> ajax = ajaxGet(<span class="string">"https://www.baidu.com"</span>);</span><br><span class="line">ajax.ifSuccess(success);</span><br><span class="line">    .ifFail(fail);</span><br></pre></td></tr></table></figure>
+
+<p>这种链式写法的好处在于，先统一执行AJAX逻辑，不关心如何处理结果，然后，根据结果是成功还是失败，在将来的某个时候调用success函数或fail函数。</p>
+<p>古人云：“君子一诺千金”，这种“承诺将来会执行”的对象在JavaScript中称为Promise对象。<br>代码示例</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> timeOut = <span class="built_in">Math</span>.random() * <span class="number">2</span>;</span><br><span class="line">    log(<span class="string">'set timeout to: '</span> + timeOut + <span class="string">' seconds.'</span>);</span><br><span class="line">    setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (timeOut &lt; <span class="number">1</span>) &#123;</span><br><span class="line">            log(<span class="string">'call resolve()...'</span>);</span><br><span class="line">            resolve(<span class="string">'200 OK'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            log(<span class="string">'call reject()...'</span>);</span><br><span class="line">            reject(<span class="string">'timeout in '</span> + timeOut + <span class="string">' seconds.'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, timeOut * <span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(test).then(<span class="function"><span class="keyword">function</span> (<span class="params">result</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'成功：'</span> + result);</span><br><span class="line">&#125;)</span><br><span class="line">    .catch(<span class="function"><span class="keyword">function</span> (<span class="params">reason</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'失败：'</span> + reason);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>可见Promise最大的好处是在异步执行的流程中，把执行代码和处理结果的代码清晰地分离了，用图来表示就是<img src="https://www.liaoxuefeng.com/files/attachments/1027242914217888/l" alt=""></p>
+<p>再举个栗子，执行网络请求时也是这样</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ajax</span>(<span class="params">method, url, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> request = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">        request.onreadystatechange = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (request.readyState === <span class="number">4</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (request.status === <span class="number">200</span>) &#123;</span><br><span class="line">                    resolve(request.responseText);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    reject(request.status);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        request.open(method, url);</span><br><span class="line">        request.send(data);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> request = ajax(<span class="string">"GET"</span>, <span class="string">"https://www.baidu.com"</span>);</span><br><span class="line">request.then(<span class="function"><span class="keyword">function</span>(<span class="params">text</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"请求内容为"</span>+text);</span><br><span class="line">&#125;).catch(<span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">"错误代码："</span>+result);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Promise还可以并行执行两个任务，使用<br><code>Promise.all([promise1,promise2]).then()</code></p>
+<hr>
+<p>浏览器章节到这里就结束了，花了差不多五天的时间，仔细读了下javascript使用。和我学过的java还有python进行比较，不得不说有惊喜的地方，也有失望的地方，js更像python和java的结合，它没有java那么繁琐，但是也没有python那么简洁，然后下一步我打算学习Vue了，当可以比较熟练的使用常用的前端技能的时候，我就又做回我的老本行后端啦~</p>
+
+        </div>
+        
+        <hr style="height:1px;margin:1rem 0"/>
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <i class="fas fa-tags has-text-grey"></i>&nbsp;
+                    <a class="has-link-grey -link" href="/tags/js/">js</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3>
+        <div class="buttons is-centered">
+            
+                
+<a class="button is-info donate">
+    <span class="icon is-small">
+        <i class="fab fa-alipay"></i>
+    </span>
+    <span>支付宝</span>
+    <div class="qrcode"><img src="https://computernetworking.oss-cn-hongkong.aliyuncs.com/temppic/alipay.jpg" alt="支付宝"></div>
+</a>
+
+                
+        </div>
+    </div>
+</div>
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/JQuery-开箱即用的js库/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">JQuery: 开箱即用的js库</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/学习计划安排/">
+                <span class="level-item">学习计划安排</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">评论</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '2df080a3f11a34fc4f0d',
+        clientSecret: '3c6fefb8587a575f94ca5a00cdf6ad9e41ad0c0c',
+        id: '39f88f3eb64fa9b0cbda1c30b36b23ab',
+        repo: 'comment-repo',
+        owner: 'ayang818',
+        admin: "ayang818",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="Ayang818 (杨丰畅)">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        Ayang818 (杨丰畅)
+                    </p>
+                    
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>中国，杭州</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        文章
+                    </p>
+                    <a href="/archives">
+                        <p class="title has-text-weight-normal">
+                            57
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        分类
+                    </p>
+                    <a href="/categories">
+                        <p class="title has-text-weight-normal">
+                            0
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        标签
+                    </p>
+                    <a href="/tags">
+                        <p class="title has-text-weight-normal">
+                            38
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/ayang818" target="_blank" rel="noopener">
+                关注我</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="Github" href="https://github.com/ayang818">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank" rel="noopener"
+                title="RSS" href="/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            链接
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/syh0313" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">syh0313</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://wzyxv1n.top/" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">wenzhuan</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">wzyxv1n.top</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://blog.csdn.net/weixin_43434223" target="_blank" rel="noopener">
+                    <span class="level-left">
+                        <span class="level-item">旧博客</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">blog.csdn.net</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            标签云
+        </h3>
+        <a href="/tags/DevOps/" style="font-size: 12px;">DevOps</a> <a href="/tags/Git/" style="font-size: 10px;">Git</a> <a href="/tags/Golang/" style="font-size: 10px;">Golang</a> <a href="/tags/I-O/" style="font-size: 10px;">I/O</a> <a href="/tags/IDEA/" style="font-size: 10px;">IDEA</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/JavaWeb/" style="font-size: 10px;">JavaWeb</a> <a href="/tags/Kotlin/" style="font-size: 10px;">Kotlin</a> <a href="/tags/Kugga/" style="font-size: 10px;">Kugga</a> <a href="/tags/Vue/" style="font-size: 10px;">Vue</a> <a href="/tags/android/" style="font-size: 10px;">android</a> <a href="/tags/big-data/" style="font-size: 10px;">big-data</a> <a href="/tags/express/" style="font-size: 10px;">express</a> <a href="/tags/jetpack/" style="font-size: 10px;">jetpack</a> <a href="/tags/js/" style="font-size: 12px;">js</a> <a href="/tags/maven/" style="font-size: 10px;">maven</a> <a href="/tags/mybatis/" style="font-size: 10px;">mybatis</a> <a href="/tags/mysql/" style="font-size: 10px;">mysql</a> <a href="/tags/python/" style="font-size: 12px;">python</a> <a href="/tags/分布式理论/" style="font-size: 14px;">分布式理论</a> <a href="/tags/前后端分离/" style="font-size: 14px;">前后端分离</a> <a href="/tags/反射/" style="font-size: 10px;">反射</a> <a href="/tags/工具/" style="font-size: 10px;">工具</a> <a href="/tags/并发编程/" style="font-size: 18px;">并发编程</a> <a href="/tags/微服务/" style="font-size: 10px;">微服务</a> <a href="/tags/性能挑战赛/" style="font-size: 10px;">性能挑战赛</a> <a href="/tags/日常技能/" style="font-size: 10px;">日常技能</a> <a href="/tags/源码/" style="font-size: 10px;">源码</a> <a href="/tags/灵感/" style="font-size: 10px;">灵感</a> <a href="/tags/算法/" style="font-size: 12px;">算法</a> <a href="/tags/老代码/" style="font-size: 10px;">老代码</a> <a href="/tags/自嗨/" style="font-size: 10px;">自嗨</a> <a href="/tags/自我提升/" style="font-size: 10px;">自我提升</a> <a href="/tags/设计模式/" style="font-size: 18px;">设计模式</a> <a href="/tags/转载/" style="font-size: 10px;">转载</a> <a href="/tags/部门教程/" style="font-size: 12px;">部门教程</a> <a href="/tags/阶段总结/" style="font-size: 10px;">阶段总结</a> <a href="/tags/随笔/" style="font-size: 16px;">随笔</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow  ">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            最新文章
+        </h3>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:15:46.000Z">2021-09-13</time></div>
+                    <a href="/系统复杂度到底是什么/" class="title has-link-black-ter is-size-6 has-text-weight-normal">系统复杂度到底是什么</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-09-13T15:11:06.000Z">2021-09-13</time></div>
+                    <a href="/SOME-TIPS/" class="title has-link-black-ter is-size-6 has-text-weight-normal"># SOME TIPS #</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-04-19T05:28:30.000Z">2021-04-19</time></div>
+                    <a href="/python-decorator/" class="title has-link-black-ter is-size-6 has-text-weight-normal">python 装饰器从走路到跑路（误</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-03-06T06:24:00.000Z">2021-03-06</time></div>
+                    <a href="/hive-sql/" class="title has-link-black-ter is-size-6 has-text-weight-normal">hive sql 调优</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2021-02-22T06:52:05.000Z">2021-02-22</time></div>
+                    <a href="/micro-service-explore/" class="title has-link-black-ter is-size-6 has-text-weight-normal">微服务技术调研</a>
+                    <p class="is-size-7 is-uppercase">
+                        
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            归档
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2021/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2021</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/05/">
+                <span class="level-start">
+                    <span class="level-item">May 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/02/">
+                <span class="level-start">
+                    <span class="level-item">February 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2020/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2020</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/10/">
+                <span class="level-start">
+                    <span class="level-item">October 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">8</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/09/">
+                <span class="level-start">
+                    <span class="level-item">September 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">9</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/08/">
+                <span class="level-start">
+                    <span class="level-item">August 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">7</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">2</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/archives/2019/03/">
+                <span class="level-start">
+                    <span class="level-item">March 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/">
+                
+                    <img src="https://upload-serve.oss-cn-beijing.aliyuncs.com/avatar/avatar.jpg" alt="javascript中的浏览器操作" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2021 ayang818&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("zh-Hans");</script>
+
+
+<script>
+var IcarusThemeSettings = {
+    site: {
+        url: 'https://blog.ayang818.top',
+        external_link: {"enable":true,"exclude":[]}
+    },
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+
+
+<script src="/js/animation.js"></script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/js/gallery.js" defer></script>
+
+
+
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+
+
+<a id="back-to-top" title="回到顶端" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/js/back-to-top.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="想要查找什么..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: '文章',
+                PAGES: '页面',
+                CATEGORIES: '分类',
+                TAGS: '标签',
+                UNTITLED: '(无标题)',
+            },
+            CONTENT_URL: '/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/js/insight.js" defer></script>
+<link rel="stylesheet" href="/css/search.css">
+<link rel="stylesheet" href="/css/insight.css">
+    
+<script src="/node_modules/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"node_modules/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/node_modules/assets/shizuku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+</html>
